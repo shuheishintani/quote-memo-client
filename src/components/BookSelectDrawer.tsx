@@ -12,16 +12,15 @@ import {
   Spinner,
   Stack,
   Text,
-  Flex,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
 import _ from "lodash";
+import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { QuotesContext } from "../context/QuotesContext";
 import { useFetchBooks } from "../hooks/useFetchBooks";
 import { Book } from "../type/Book";
-import Image from "next/image";
 
 interface Props {
   setBook: React.Dispatch<React.SetStateAction<Book | undefined>>;
