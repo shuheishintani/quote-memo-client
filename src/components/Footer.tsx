@@ -1,5 +1,11 @@
-import { Flex, FlexProps } from '@chakra-ui/react'
+import { Box, Divider, Text } from "@chakra-ui/react";
+import React from "react";
 
-export const Footer = (props: FlexProps) => (
-  <Flex as="footer" py="8rem" {...props} />
-)
+export const Footer: React.VFC = () => (
+  <Box p={4} mb={5} align="center" mx="auto" w="100%">
+    <Divider mb={5} />
+    <Text color="gray.500" fontSize="sm">
+      &copy; QuoteMemo 2021
+    </Text>
+  </Box>
+);

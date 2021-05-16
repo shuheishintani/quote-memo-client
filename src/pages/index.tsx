@@ -1,56 +1,57 @@
-import {
-  Link as ChakraLink,
-  Text,
-  Code,
-  List,
-  ListIcon,
-  ListItem,
-} from '@chakra-ui/react'
-import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
+import { Box, Spinner, Text } from "@chakra-ui/react";
+import { GetStaticProps, NextPage } from "next";
+import React, { useState } from "react";
+import { PublicQuoteItem } from "../components/PublicQuoteItem";
+import { TagInput } from "../components/TagInput";
+import { usePublicQuotes } from "../hooks/usePublicQuotes";
+import { Tag } from "../type/Tag";
 
-import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import { CTA } from '../components/CTA'
-import { Footer } from '../components/Footer'
+interface Props {
+  registeredTags: string[];
+}
 
-const Index = () => (
-  <Container height="100vh">
-    <Hero />
-    <Main>
-      <Text>
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
-        <Code>typescript</Code>.
+const Index: NextPage<Props> = ({ registeredTags }) => {
+  const [addedTags, setAddedTags] = useState<string[]>([]);
+  const { publicQuotes, loading: publicQuotesLoading } =
+    usePublicQuotes(addedTags);
+
+  return (
+    <>
+      <Text fontSize="xl" mb={10}>
+        公開された引用一覧
       </Text>
+      <TagInput
+        registeredTags={registeredTags}
+        addedTags={addedTags}
+        setAddedTags={setAddedTags}
+      />
+      <Box mt={24} />
+      {publicQuotes && !publicQuotesLoading ? (
+        publicQuotes.map((quote) => (
+          <PublicQuoteItem
+            key={quote.id}
+            quote={quote}
+            setAddedTags={setAddedTags}
+          />
+        ))
+      ) : (
+        <Spinner />
+      )}
+    </>
+  );
+};
 
-      <List spacing={3} my={0}>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink
-            isExternal
-            href="https://chakra-ui.com"
-            flexGrow={1}
-            mr={2}
-          >
-            Chakra UI <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-      </List>
-    </Main>
+export const getStaticProps: GetStaticProps = async () => {
+  const response = await fetch(
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/public/tags"
+  );
+  const data = await response.json();
+  const registeredTags = data.map((tag: Tag) => tag.name);
+  return {
+    props: {
+      registeredTags: registeredTags,
+    },
+  };
+};
 
-    <DarkModeSwitch />
-    <Footer>
-      <Text>Next ❤️ Chakra</Text>
-    </Footer>
-    <CTA />
-  </Container>
-)
-
-export default Index
+export default Index;
