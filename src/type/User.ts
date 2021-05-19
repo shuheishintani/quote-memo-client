@@ -8,4 +8,5 @@ export type User = {
   profile_image_url: string;
   provider: string;
   quotes?: Quote[];
+  favorite_quotes?: Quote[];
 };

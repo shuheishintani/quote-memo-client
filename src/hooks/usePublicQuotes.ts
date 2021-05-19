@@ -18,7 +18,6 @@ export const usePublicQuotes = (tags: string[]) => {
     setLoading(true);
     await sleep(1000);
     const response = await customAxios.get(url);
-    // console.log(response.data);
     if (response?.status === 200) {
       setPublicQuotes(response.data);
     }

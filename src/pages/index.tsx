@@ -18,7 +18,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
   return (
     <>
       <Text fontSize="xl" fontWeight="bold" mb={10}>
-        Published quotes
+        Public quotes
       </Text>
       <TagInput
         registeredTags={registeredTags}

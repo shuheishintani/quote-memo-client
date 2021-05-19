@@ -92,7 +92,7 @@ export const Navbar: React.VFC = () => {
                   variant="solid"
                   onClick={signin}
                 >
-                  ログイン
+                  Login
                 </Button>
               </Flex>
             )}

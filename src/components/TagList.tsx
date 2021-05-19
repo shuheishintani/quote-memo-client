@@ -34,7 +34,7 @@ export const TagList: React.VFC<Props> = ({
                 }
               }}
             >
-              <TagLabel>{tag}</TagLabel>
+              <TagLabel>#{tag}</TagLabel>
               {handleDelete && (
                 <TagCloseButton onClick={() => handleDelete(tag)} />
               )}
