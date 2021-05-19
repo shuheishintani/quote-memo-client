@@ -28,8 +28,8 @@ const Create: NextPage<Props> = ({ registeredTags }) => {
 
   return (
     <>
-      <Text fontSize="xl" mb={10}>
-        新規作成
+      <Text fontSize="xl" mb={10} fontWeight="bold">
+        Add new
       </Text>
       {user && (
         <QuoteForm

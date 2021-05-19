@@ -88,14 +88,14 @@ export const BookSelectDrawer: React.VFC<Props> = ({
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">キーワード検索</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">出典を探す</DrawerHeader>
           <DrawerBody>
             <Stack spacing="24px">
               <Box>
                 <Text mb={2}>タイトル</Text>
                 <Input
                   variant="flushed"
-                  placeholder="タイトルを入力してください"
+                  placeholder="タイトルを入力..."
                   size="md"
                   mb={5}
                   label="Search"
@@ -123,7 +123,7 @@ export const BookSelectDrawer: React.VFC<Props> = ({
           </DrawerBody>
           <DrawerFooter borderTopWidth="1px">
             <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
+              キャンセル
             </Button>
           </DrawerFooter>
         </DrawerContent>

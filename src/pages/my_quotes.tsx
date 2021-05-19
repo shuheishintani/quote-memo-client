@@ -31,8 +31,8 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
           src={user?.providerData[0]?.photoURL || undefined}
           mr={2}
         />
-        <Text fontSize="xl" mb={10}>
-          {user?.displayName}さんの引用一覧
+        <Text fontSize="xl" mb={10} fontWeight="bold">
+          {user?.displayName}'s quotes
         </Text>
       </Flex>
 

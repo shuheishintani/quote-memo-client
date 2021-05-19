@@ -10,8 +10,8 @@ export const Layout: React.FC<Props> = ({ children }) => {
   return (
     <>
       <Navbar />
-      <Container minHeight="100vh">
-        <Box mt={8} mx="auto" w="100%" maxW="800px" minHeight="100vh">
+      <Container zIndex={0}>
+        <Box mt={8} w="100%" maxWidth="800px" minHeight="90vh">
           {children}
         </Box>
         <Footer />

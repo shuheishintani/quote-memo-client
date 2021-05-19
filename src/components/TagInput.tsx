@@ -60,7 +60,7 @@ export const TagInput: NextPage<Props> = ({
       <Text>タグ検索</Text>
       <Input
         variant="flushed"
-        placeholder="タグを入力してください"
+        placeholder="タグを入力..."
         size="md"
         mb={5}
         value={currentTag}

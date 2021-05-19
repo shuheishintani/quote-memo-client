@@ -17,8 +17,8 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
 
   return (
     <>
-      <Text fontSize="xl" mb={10}>
-        公開された引用一覧
+      <Text fontSize="xl" fontWeight="bold" mb={10}>
+        Published quotes
       </Text>
       <TagInput
         registeredTags={registeredTags}

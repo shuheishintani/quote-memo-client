@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import QuoteForm from "../../components/QuoteForm";
 import { QuotesContext } from "../../context/QuotesContext";
 import { useUpdateQuote } from "../../hooks/useUpdateQuote";
+import { Text } from "@chakra-ui/react";
 
 const Edit: NextPage = () => {
   const router = useRouter();
@@ -14,12 +15,17 @@ const Edit: NextPage = () => {
   const { updateQuote, processing } = useUpdateQuote();
 
   return (
-    <QuoteForm
-      updateQuote={updateQuote}
-      processing={processing}
-      initialQuote={edittingQuote}
-      registeredTags={[]}
-    />
+    <>
+      <Text fontSize="xl" mb={10} fontWeight="bold">
+        Edit
+      </Text>
+      <QuoteForm
+        updateQuote={updateQuote}
+        processing={processing}
+        initialQuote={edittingQuote}
+        registeredTags={[]}
+      />
+    </>
   );
 };
 

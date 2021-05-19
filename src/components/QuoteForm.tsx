@@ -6,6 +6,7 @@ import {
   Switch,
   Text,
   Textarea,
+  useColorMode,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -59,6 +60,7 @@ const QuoteFrom: React.VFC<Props> = ({
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const { colorMode } = useColorMode();
 
   const handleBookSelect = (selectedBook: Book) => {
     setBook(selectedBook);
@@ -126,7 +128,6 @@ const QuoteFrom: React.VFC<Props> = ({
           position: "bottom-left",
           isClosable: true,
         });
-        reset();
       }
     }
   };
@@ -152,16 +153,28 @@ const QuoteFrom: React.VFC<Props> = ({
               <Text>{book.publisher}</Text>
             </Box>
             {postQuote && (
-              <Button ml="auto" colorScheme="teal" onClick={onOpen} mb={10}>
-                キーワード検索
+              <Button
+                ml="auto"
+                colorScheme="cyan"
+                color={colorMode === "light" ? "white" : "black"}
+                onClick={onOpen}
+                mb={10}
+              >
+                出典を探す
               </Button>
             )}
           </Flex>
         ) : (
           <Flex>
-            <Text>出典が選択されていません。</Text>
-            <Button ml="auto" colorScheme="teal" onClick={onOpen} mb={10}>
-              キーワード検索
+            <Text fontSize="sm">出典が選択されていません。</Text>
+            <Button
+              ml="auto"
+              colorScheme="cyan"
+              color={colorMode === "light" ? "white" : "black"}
+              onClick={onOpen}
+              mb={10}
+            >
+              出典を探す
             </Button>
           </Flex>
         )}
@@ -183,11 +196,7 @@ const QuoteFrom: React.VFC<Props> = ({
 
         <Box my={10}>
           <Text mb={2}>本文</Text>
-          <Textarea
-            name="text"
-            placeholder="本文を入力してください"
-            ref={register}
-          />
+          <Textarea name="text" placeholder="本文を入力..." ref={register} />
           <Text color="red.500" fontSize="xs">
             {errors.text && errors.text.message}
           </Text>
@@ -198,7 +207,7 @@ const QuoteFrom: React.VFC<Props> = ({
           <Input
             name="page"
             variant="flushed"
-            placeholder="ページを数字で入力してください"
+            placeholder="ページを数字で入力..."
             size="md"
             autoComplete="off"
             ref={register}
@@ -215,7 +224,8 @@ const QuoteFrom: React.VFC<Props> = ({
 
         <Button
           type="submit"
-          colorScheme="teal"
+          colorScheme="cyan"
+          color={colorMode === "light" ? "white" : "black"}
           variant="solid"
           isLoading={processing}
           mb={20}
