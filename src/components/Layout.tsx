@@ -14,8 +14,8 @@ export const Layout: React.FC<Props> = ({ children }) => {
         <Box mt={8} w="100%" maxWidth="800px" minHeight="90vh">
           {children}
         </Box>
-        <Footer />
       </Container>
+      <Footer />
     </>
   );
 };

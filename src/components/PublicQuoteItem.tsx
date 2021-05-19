@@ -1,4 +1,12 @@
-import { Avatar, Box, Divider, Flex, Icon, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Divider,
+  Flex,
+  Icon,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useAddFavoriteQuote } from "../hooks/useAddFavoriteQuote";
@@ -13,7 +21,7 @@ interface Props {
 
 export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
   const { user } = useUser();
-  const { addFavoriteQuote } = useAddFavoriteQuote();
+  const { addFavoriteQuote, processing } = useAddFavoriteQuote();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
   useEffect(() => {
@@ -46,7 +54,11 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
             src={quote.user.profile_image_url}
             mr={5}
           />
-          {isFavorite ? (
+          {!user ? (
+            <></>
+          ) : processing ? (
+            <Spinner size="sm" />
+          ) : isFavorite ? (
             <Icon as={AiFillHeart} color="red.500" cursor="pointer" />
           ) : (
             <Icon

@@ -117,16 +117,28 @@ export const Navbar: React.VFC = () => {
           Public
         </Text>
         {user && (
-          <Text
-            mr={5}
-            pb={3}
-            borderBottom={router.pathname === "/my_quotes" ? "2px" : "0px"}
-            borderColor="cyan"
-            cursor="pointer"
-            onClick={() => router.push("/my_quotes")}
-          >
-            Private
-          </Text>
+          <>
+            <Text
+              mr={5}
+              pb={3}
+              borderBottom={router.pathname === "/my_quotes" ? "2px" : "0px"}
+              borderColor="cyan"
+              cursor="pointer"
+              onClick={() => router.push("/my_quotes")}
+            >
+              Private
+            </Text>
+            <Text
+              mr={5}
+              pb={3}
+              borderBottom={router.pathname === "/favorite" ? "2px" : "0px"}
+              borderColor="cyan"
+              cursor="pointer"
+              onClick={() => router.push("/favorite")}
+            >
+              Favorite
+            </Text>
+          </>
         )}
       </Flex>
     </Box>
