@@ -1,6 +1,7 @@
 import { Avatar, Box, Divider, Flex, Icon, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { useAddFavoriteQuote } from "../hooks/useAddFavoriteQuote";
 import { useUser } from "../hooks/useUser";
 import { Quote } from "../type/Quote";
 import { TagList } from "./TagList";
@@ -12,10 +13,24 @@ interface Props {
 
 export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
   const { user } = useUser();
+  const { addFavoriteQuote } = useAddFavoriteQuote();
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-  const isFavorite = user?.favorite_quotes
-    ?.map((quote) => quote.id)
-    .includes(quote.id);
+  useEffect(() => {
+    const isFavorite = user?.favorite_quotes
+      ?.map((quote) => quote.id)
+      .includes(quote.id);
+    if (isFavorite) {
+      setIsFavorite(true);
+    }
+  }, [user, quote]);
+
+  const handleLike = async () => {
+    const success = await addFavoriteQuote(quote.id);
+    if (success) {
+      setIsFavorite(true);
+    }
+  };
 
   return (
     <>
@@ -34,7 +49,12 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
           {isFavorite ? (
             <Icon as={AiFillHeart} color="red.500" cursor="pointer" />
           ) : (
-            <Icon as={AiOutlineHeart} color="gray.500" cursor="pointer" />
+            <Icon
+              as={AiOutlineHeart}
+              color="gray.500"
+              cursor="pointer"
+              onClick={handleLike}
+            />
           )}
         </Flex>
 

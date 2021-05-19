@@ -48,11 +48,9 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              警告
+              確認
             </AlertDialogHeader>
-
             <AlertDialogBody>本当に削除しますか？</AlertDialogBody>
-
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
                 キャンセル
@@ -75,7 +73,7 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
         <Divider mb={5} />
         <Flex>
           <TagList
-            tags={quote.tags.map((tag) => tag.name)}
+            tags={quote.tags?.map((tag) => tag.name)}
             setAddedTags={setAddedTags}
           />
           {quote.published ? (
@@ -92,7 +90,6 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
               aria-label="ViewOffIcon"
               icon={<ViewOffIcon />}
               ml="auto"
-              color="red.500"
               mr={4}
               onClick={() => handlePublish(quote.id)}
               isLoading={isUpdating}
