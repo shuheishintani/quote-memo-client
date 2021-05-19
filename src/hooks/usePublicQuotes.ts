@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Quote } from "../type/Quote";
-import { sleep } from "../util/sleep";
 import { useAxios } from "./useAxios";
 import { useEffectAsync } from "./useEffectAsync";
 
@@ -16,7 +15,6 @@ export const usePublicQuotes = (tags: string[]) => {
         ? `/api/public/quotes?tags=${query}`
         : "api/public/quotes";
     setLoading(true);
-    await sleep(1000);
     const response = await customAxios.get(url);
     if (response?.status === 200) {
       setPublicQuotes(response.data);

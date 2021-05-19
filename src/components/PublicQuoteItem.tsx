@@ -10,6 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useAddFavoriteQuote } from "../hooks/useAddFavoriteQuote";
+import { useRemoveFavoriteQuote } from "../hooks/useRemoveFavoriteQuote";
 import { useUser } from "../hooks/useUser";
 import { Quote } from "../type/Quote";
 import { TagList } from "./TagList";
@@ -21,7 +22,9 @@ interface Props {
 
 export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
   const { user } = useUser();
-  const { addFavoriteQuote, processing } = useAddFavoriteQuote();
+  const { addFavoriteQuote, processing: addProcessing } = useAddFavoriteQuote();
+  const { removeFavoriteQuote, processing: removeProcessing } =
+    useRemoveFavoriteQuote();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
   useEffect(() => {
@@ -37,6 +40,13 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
     const success = await addFavoriteQuote(quote.id);
     if (success) {
       setIsFavorite(true);
+    }
+  };
+
+  const handleUnlike = async () => {
+    const success = await removeFavoriteQuote(quote.id);
+    if (success) {
+      setIsFavorite(false);
     }
   };
 
@@ -56,10 +66,15 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
           />
           {!user ? (
             <></>
-          ) : processing ? (
+          ) : addProcessing || removeProcessing ? (
             <Spinner size="sm" />
           ) : isFavorite ? (
-            <Icon as={AiFillHeart} color="red.500" cursor="pointer" />
+            <Icon
+              as={AiFillHeart}
+              color="red.500"
+              cursor="pointer"
+              onClick={handleUnlike}
+            />
           ) : (
             <Icon
               as={AiOutlineHeart}
@@ -90,3 +105,9 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
     </>
   );
 };
+function useremoveFavoriteQuote(): {
+  removeFavoriteQuote: any;
+  processing: any;
+} {
+  throw new Error("Function not implemented.");
+}
