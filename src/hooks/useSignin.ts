@@ -28,7 +28,7 @@ export const useSignin: () => {
       };
       customAxios.post("/api/users", userInput);
     });
-    router.push("/my_quotes");
+    router.push("/private");
   }, []);
 
   return { signin };

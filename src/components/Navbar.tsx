@@ -16,6 +16,7 @@ import {
   WrapItem,
   Text,
   useColorMode,
+  Icon,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -24,6 +25,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useSignout } from "../hooks/useSignout";
 import { useSignin } from "../hooks/useSignin";
 import { DarkModeSwitch } from "./DarkModeSwitch";
+import { RiQuillPenLine } from "react-icons/ri";
 
 export const Navbar: React.VFC = () => {
   const { user } = useAuth();
@@ -43,6 +45,7 @@ export const Navbar: React.VFC = () => {
   return (
     <Box zIndex={2} top={0} position="sticky" bg={bgColor[colorMode]}>
       <Flex p={4} align="center">
+        <Icon as={RiQuillPenLine} cursor="pointer" mr={2} w={6} h={6} />
         <NextLink href="/">
           <Link fontSize="xl" fontWeight="bold">
             QuoteMemo
@@ -121,10 +124,10 @@ export const Navbar: React.VFC = () => {
             <Text
               mr={5}
               pb={3}
-              borderBottom={router.pathname === "/my_quotes" ? "2px" : "0px"}
+              borderBottom={router.pathname === "/private" ? "2px" : "0px"}
               borderColor="cyan"
               cursor="pointer"
-              onClick={() => router.push("/my_quotes")}
+              onClick={() => router.push("/private")}
             >
               Private
             </Text>

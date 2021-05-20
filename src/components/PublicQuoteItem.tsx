@@ -10,8 +10,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useAddFavoriteQuote } from "../hooks/useAddFavoriteQuote";
+import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
 import { useRemoveFavoriteQuote } from "../hooks/useRemoveFavoriteQuote";
-import { useUser } from "../hooks/useUser";
 import { Quote } from "../type/Quote";
 import { TagList } from "./TagList";
 
@@ -21,20 +21,20 @@ interface Props {
 }
 
 export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
-  const { user } = useUser();
+  const { favoriteQuotes, loading } = useFavoriteQuotes();
   const { addFavoriteQuote, processing: addProcessing } = useAddFavoriteQuote();
   const { removeFavoriteQuote, processing: removeProcessing } =
     useRemoveFavoriteQuote();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
   useEffect(() => {
-    const isFavorite = user?.favorite_quotes
+    const isFavorite = favoriteQuotes
       ?.map((quote) => quote.id)
       .includes(quote.id);
     if (isFavorite) {
       setIsFavorite(true);
     }
-  }, [user, quote]);
+  }, [favoriteQuotes, quote]);
 
   const handleLike = async () => {
     const success = await addFavoriteQuote(quote.id);
@@ -64,9 +64,9 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
             src={quote.user.profile_image_url}
             mr={5}
           />
-          {!user ? (
+          {!favoriteQuotes ? (
             <></>
-          ) : addProcessing || removeProcessing ? (
+          ) : loading || addProcessing || removeProcessing ? (
             <Spinner size="sm" />
           ) : isFavorite ? (
             <Icon
@@ -105,9 +105,3 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
     </>
   );
 };
-function useremoveFavoriteQuote(): {
-  removeFavoriteQuote: any;
-  processing: any;
-} {
-  throw new Error("Function not implemented.");
-}

@@ -1,23 +1,21 @@
 import { useState } from "react";
-import { User } from "../type/User";
-import { sleep } from "../util/sleep";
+import { Quote } from "../type/Quote";
 import { useAxios } from "./useAxios";
 import { useEffectAsync } from "./useEffectAsync";
 
-export const useUser = () => {
-  const [user, setUser] = useState<User | undefined>(undefined);
+export const useFavoriteQuotes = () => {
+  const [favoriteQuotes, setFavoriteQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { customAxios } = useAxios();
 
   useEffectAsync(async () => {
     setLoading(true);
-    await sleep(1000);
-    const response = await customAxios.get("/api/users/me");
+    const response = await customAxios.get("/api/quotes/favorite");
     if (response?.status === 200) {
-      setUser(response.data);
+      setFavoriteQuotes(response.data);
     }
     setLoading(false);
   }, []);
 
-  return { user, loading };
+  return { favoriteQuotes, loading };
 };

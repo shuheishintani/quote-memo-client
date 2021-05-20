@@ -32,6 +32,7 @@ export const TagInput: NextPage<Props> = ({
       e.preventDefault();
       setAddedTags((prev) => [...new Set([...prev, currentTag])]);
       setCurrentTag("");
+      setSuggestedTags([]);
     }
   };
 
