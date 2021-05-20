@@ -109,7 +109,7 @@ export const BookSelectDrawer: React.VFC<Props> = ({
                     {books.map((book) => (
                       <WrapItem key={book.isbn}>
                         <Image
-                          src={book.coverImageUrl}
+                          src={book.cover_image_url}
                           width={105}
                           height={148}
                           onClick={() => handleBookSelect(book)}

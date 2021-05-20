@@ -90,7 +90,7 @@ const QuoteFrom: React.VFC<Props> = ({
         title: book.title,
         author: book.author,
         publisher: book.publisher,
-        coverImageUrl: book.coverImageUrl,
+        cover_image_url: book.cover_image_url,
       },
       tags: addedTags.map((tag) => {
         return { name: tag };
@@ -139,7 +139,7 @@ const QuoteFrom: React.VFC<Props> = ({
         {book ? (
           <Flex>
             <Image
-              src={book.coverImageUrl}
+              src={book.cover_image_url}
               width={105}
               height={148}
               key={book.isbn}

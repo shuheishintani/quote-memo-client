@@ -14,7 +14,7 @@ export const useFetchBooks = () => {
     fetchBooksInput: FetchBooksInput
   ): Promise<Book[]> => {
     const { title, author, page } = fetchBooksInput;
-    let url = `/api/public/books`;
+    let url = `/api/public/external_books`;
 
     if (title && author) {
       url += `?title=${title}&author=${author}&page=${page}`;

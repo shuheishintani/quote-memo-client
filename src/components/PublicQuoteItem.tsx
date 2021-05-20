@@ -6,7 +6,9 @@ import {
   Icon,
   Spinner,
   Text,
+  Link,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useAddFavoriteQuote } from "../hooks/useAddFavoriteQuote";
@@ -14,10 +16,11 @@ import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
 import { useRemoveFavoriteQuote } from "../hooks/useRemoveFavoriteQuote";
 import { Quote } from "../type/Quote";
 import { TagList } from "./TagList";
+import NextLink from "next/link";
 
 interface Props {
   quote: Quote;
-  setAddedTags: React.Dispatch<React.SetStateAction<string[]>>;
+  setAddedTags?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
@@ -26,6 +29,7 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
   const { removeFavoriteQuote, processing: removeProcessing } =
     useRemoveFavoriteQuote();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const router = useRouter();
 
   useEffect(() => {
     const isFavorite = favoriteQuotes
@@ -95,12 +99,19 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
         <Text fontSize="md">{quote.text}</Text>
 
         <Box mb={4} />
-        <Flex align="center">
-          <Text fontSize="sm" ml="auto" isTruncated>
-            ── {quote.book.author.split("/")[0].replace(/\s+/g, "")}『
-            {quote.book.title}』
-          </Text>
-        </Flex>
+        {quote.book.id !== 0 && (
+          <Flex align="center">
+            <NextLink href={`/books/${quote.book.id}`}>
+              <Text fontSize="sm" ml="auto" cursor="pointer" isTruncated>
+                ──{" "}
+                <Link>
+                  {quote.book.author.split("/")[0].replace(/\s+/g, "")}『
+                  {quote.book.title}』
+                </Link>
+              </Text>
+            </NextLink>
+          </Flex>
+        )}
       </Box>
     </>
   );
