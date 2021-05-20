@@ -32,7 +32,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
           mr={2}
         />
         <Text fontSize="xl" mb={10} fontWeight="bold">
-          {user?.displayName}
+          {user?.displayName}'s quotes
         </Text>
       </Flex>
 

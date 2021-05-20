@@ -35,7 +35,6 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
 
   const handlePublish = (id: number) => {
     updateQuote({ ...quote, published: !quote.published }, id);
-    console.log("hoge");
   };
 
   return (

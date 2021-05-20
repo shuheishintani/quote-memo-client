@@ -8,10 +8,13 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
+  Icon,
   Input,
   Spinner,
   Stack,
   Text,
+  useColorMode,
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
@@ -21,6 +24,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { QuotesContext } from "../context/QuotesContext";
 import { useFetchBooks } from "../hooks/useFetchBooks";
 import { Book } from "../type/Book";
+import { AiOutlineSearch } from "react-icons/ai";
+import { SearchIcon } from "@chakra-ui/icons";
 
 interface Props {
   setBook: React.Dispatch<React.SetStateAction<Book | undefined>>;
@@ -41,6 +46,9 @@ export const BookSelectDrawer: React.VFC<Props> = ({
   const { quotes } = useContext(QuotesContext);
   const [keyword, setKeyword] = useState("");
   const firstField = React.createRef<HTMLInputElement>();
+  const { colorMode } = useColorMode();
+  const bgColor = { light: "gray.100", dark: "gray.900" };
+  const color = { light: "black", dark: "white" };
 
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
@@ -52,6 +60,7 @@ export const BookSelectDrawer: React.VFC<Props> = ({
         page: "1",
       };
       const books = await fetchBooks(fetchBooksInput);
+      console.log(books);
       setLoading(false);
       setBooks(books);
     }
@@ -86,9 +95,14 @@ export const BookSelectDrawer: React.VFC<Props> = ({
         size="lg"
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent bg={bgColor[colorMode]} color={color[colorMode]}>
           <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">出典を探す</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px">
+            <Flex align="center">
+              <SearchIcon mr={2} />
+              <Text>出典を探す</Text>
+            </Flex>
+          </DrawerHeader>
           <DrawerBody>
             <Stack spacing="24px">
               <Box>
@@ -108,12 +122,14 @@ export const BookSelectDrawer: React.VFC<Props> = ({
                   <Wrap spacing="20px">
                     {books.map((book) => (
                       <WrapItem key={book.isbn}>
-                        <Image
-                          src={book.cover_image_url}
-                          width={105}
-                          height={148}
-                          onClick={() => handleBookSelect(book)}
-                        />
+                        {book.cover_image_url && (
+                          <Image
+                            src={book.cover_image_url}
+                            width={105}
+                            height={148}
+                            onClick={() => handleBookSelect(book)}
+                          />
+                        )}
                       </WrapItem>
                     ))}
                   </Wrap>

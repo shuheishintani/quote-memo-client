@@ -29,7 +29,6 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
   const { removeFavoriteQuote, processing: removeProcessing } =
     useRemoveFavoriteQuote();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const router = useRouter();
 
   useEffect(() => {
     const isFavorite = favoriteQuotes
@@ -58,36 +57,42 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
     <>
       <Box key={quote.id} mb={10}>
         <Divider mb={5} />
-        <Flex align="center" mb={5}>
-          <Text fontSize="xs" mr={2}>
-            Created by
-          </Text>
-          <Avatar
-            size="xs"
-            name={quote.user.username || undefined}
-            src={quote.user.profile_image_url}
-            mr={5}
-          />
-          {!favoriteQuotes ? (
-            <></>
-          ) : loading || addProcessing || removeProcessing ? (
-            <Spinner size="sm" />
-          ) : isFavorite ? (
-            <Icon
-              as={AiFillHeart}
-              color="red.500"
-              cursor="pointer"
-              onClick={handleUnlike}
-            />
-          ) : (
-            <Icon
-              as={AiOutlineHeart}
-              color="gray.500"
-              cursor="pointer"
-              onClick={handleLike}
-            />
-          )}
-        </Flex>
+        {quote.user.id !== "" && (
+          <Flex align="center" mb={5}>
+            <Text fontSize="xs" mr={2}>
+              Created by
+            </Text>
+            <NextLink href={`/users/${quote.user.id}`}>
+              <Avatar
+                size="xs"
+                name={quote.user.username || undefined}
+                src={quote.user.profile_image_url}
+                mr={5}
+                cursor="pointer"
+              />
+            </NextLink>
+
+            {!favoriteQuotes ? (
+              <></>
+            ) : loading || addProcessing || removeProcessing ? (
+              <Spinner size="sm" />
+            ) : isFavorite ? (
+              <Icon
+                as={AiFillHeart}
+                color="red.500"
+                cursor="pointer"
+                onClick={handleUnlike}
+              />
+            ) : (
+              <Icon
+                as={AiOutlineHeart}
+                color="gray.500"
+                cursor="pointer"
+                onClick={handleLike}
+              />
+            )}
+          </Flex>
+        )}
 
         <Flex>
           <TagList
