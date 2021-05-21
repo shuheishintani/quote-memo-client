@@ -30,6 +30,8 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
     useRemoveFavoriteQuote();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
+  console.log(quote);
+
   useEffect(() => {
     const isFavorite = favoriteQuotes
       ?.map((quote) => quote.id)

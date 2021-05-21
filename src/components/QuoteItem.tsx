@@ -12,6 +12,7 @@ import {
   Flex,
   IconButton,
   Text,
+  Link,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
@@ -19,6 +20,7 @@ import { useDeleteQuote } from "../hooks/useDeleteQuote";
 import { useUpdateQuote } from "../hooks/useUpdateQuote";
 import { Quote } from "../type/Quote";
 import { TagList } from "./TagList";
+import NextLink from "next/link";
 
 interface Props {
   quote: Quote;
@@ -109,14 +111,21 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
           />
         </Flex>
         <Box mb={4} />
-        <Text fontSize="md">{quote.text}</Text>
+        <Text fontSize="md">
+          {quote.id} {quote.text}
+        </Text>
 
         <Box mb={4} />
         <Flex>
-          <Text fontSize="sm" ml="auto">
-            ── {quote.book.author.split("/")[0].replace(/\s+/g, "")}『
-            {quote.book.title}』
-          </Text>
+          <NextLink href={`/books/${quote.book.id}`}>
+            <Text fontSize="sm" ml="auto" cursor="pointer" isTruncated>
+              ──{" "}
+              <Link>
+                {quote.book.author.split("/")[0].replace(/\s+/g, "")}『
+                {quote.book.title}』
+              </Link>
+            </Text>
+          </NextLink>
         </Flex>
       </Box>
     </>

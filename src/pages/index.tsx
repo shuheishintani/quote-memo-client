@@ -12,8 +12,10 @@ interface Props {
 
 const Index: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
-  const { publicQuotes, loading: publicQuotesLoading } =
-    usePublicQuotes(addedTags);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { publicQuotes, loading } = usePublicQuotes(addedTags, currentPage);
+
+  console.log(publicQuotes);
 
   return (
     <>
@@ -26,16 +28,24 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
         setAddedTags={setAddedTags}
       />
       <Box mt={24} />
-      {publicQuotes && !publicQuotesLoading ? (
+      {publicQuotes &&
         publicQuotes.map((quote) => (
           <PublicQuoteItem
             key={quote.id}
             quote={quote}
             setAddedTags={setAddedTags}
           />
-        ))
-      ) : (
+        ))}
+      {loading ? (
         <Spinner />
+      ) : (
+        <Text
+          fontSize="sm"
+          mb={24}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
+        >
+          もっと読む
+        </Text>
       )}
     </>
   );

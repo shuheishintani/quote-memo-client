@@ -14,8 +14,8 @@ interface Props {
 
 const Index: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
-  const { quotes, loading: quotesLoading } = useQuotes(addedTags);
-  usePublicQuotes(addedTags);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { quotes, loading: quotesLoading } = useQuotes(addedTags, currentPage);
   const { user, loading: userLoading } = useAuth();
 
   if (userLoading) {
@@ -44,16 +44,24 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
             setAddedTags={setAddedTags}
           />
           <Box mt={24} />
-          {quotes && !quotesLoading ? (
+          {quotes &&
             quotes.map((quote) => (
               <QuoteItem
                 key={quote.id}
                 quote={quote}
                 setAddedTags={setAddedTags}
               />
-            ))
-          ) : (
+            ))}
+          {quotesLoading ? (
             <Spinner />
+          ) : (
+            <Text
+              fontSize="sm"
+              mb={24}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+            >
+              もっと読む
+            </Text>
           )}
         </>
       )}
