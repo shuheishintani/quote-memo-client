@@ -6,7 +6,8 @@ import { useEffectAsync } from "./useEffectAsync";
 
 export const usePublicQuotes = (tags: string[], page: number) => {
   const [publicQuotes, setPublicQuotes] = useState<Quote[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [fetching, setFetching] = useState<boolean>(false);
+  const [nextFetching, setNextFetching] = useState<boolean>(false);
   const { customAxios } = useAxios();
 
   useEffectAsync(async () => {
@@ -16,13 +17,13 @@ export const usePublicQuotes = (tags: string[], page: number) => {
         tags.length > 0
           ? `/api/public/quotes?page=${page}&tags=${query}`
           : `api/public/quotes?page=${page}`;
-      setLoading(true);
+      setFetching(true);
       await sleep(1000);
       const response = await customAxios.get(url);
       if (response?.status === 200) {
         setPublicQuotes(response.data);
       }
-      setLoading(false);
+      setFetching(false);
     }
   }, [tags]);
 
@@ -33,15 +34,15 @@ export const usePublicQuotes = (tags: string[], page: number) => {
         tags.length > 0
           ? `/api/public/quotes?page=${page}&tags=${query}`
           : `api/public/quotes?page=${page}`;
-      setLoading(true);
+      setNextFetching(true);
       await sleep(1000);
       const response = await customAxios.get(url);
       if (response?.status === 200) {
         setPublicQuotes((prev) => [...prev, ...response.data]);
       }
-      setLoading(false);
+      setNextFetching(false);
     }
   }, [page]);
 
-  return { publicQuotes, loading };
+  return { publicQuotes, fetching, nextFetching };
 };

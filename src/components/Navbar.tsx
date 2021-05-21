@@ -86,11 +86,11 @@ export const Navbar: React.VFC = () => {
                 </MenuButton>
                 <MenuList>
                   <MenuItem onClick={handleLogout}>
-                    <Icon as={BiLogOutCircle} mr={2} w={6} h={6} />
+                    <Icon as={BiLogOutCircle} mr={2} w={5} h={5} />
                     Logout
                   </MenuItem>
                   <MenuItem onClick={() => router.push("/config")}>
-                    <Icon as={AiOutlineSetting} mr={2} w={6} h={6} />
+                    <Icon as={AiOutlineSetting} mr={2} w={5} h={5} />
                     Config
                   </MenuItem>
                 </MenuList>

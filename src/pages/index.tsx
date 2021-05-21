@@ -1,6 +1,7 @@
 import { Box, Spinner, Text, useColorMode } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import React, { useState } from "react";
+import { FetchMoreButton } from "../components/FetchMoreButton";
 import { PublicQuoteItem } from "../components/PublicQuoteItem";
 import { TagInput } from "../components/TagInput";
 import { usePublicQuotes } from "../hooks/usePublicQuotes";
@@ -13,14 +14,17 @@ interface Props {
 const Index: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { publicQuotes, loading } = usePublicQuotes(addedTags, currentPage);
+  const { publicQuotes, fetching, nextFetching } = usePublicQuotes(
+    addedTags,
+    currentPage
+  );
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
 
   return (
     <>
       <Text fontSize="xl" fontWeight="bold" mb={10}>
-        Public quotes
+        Public Quotes
       </Text>
       <TagInput
         registeredTags={registeredTags}
@@ -37,22 +41,13 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
             setAddedTags={setAddedTags}
           />
         ))}
-      {loading ? (
+      {fetching ? (
         <Spinner mb={24} />
       ) : (
-        <Box
-          borderRadius="md"
-          cursor="pointer"
-          maxWidth="400px"
-          mx="auto"
-          bg={isDark ? "#1B212C" : "white"}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-          mb={24}
-        >
-          <Text fontSize="sm" align="center" py={2}>
-            ＋ さらに読み込む
-          </Text>
-        </Box>
+        <FetchMoreButton
+          setCurrentPage={setCurrentPage}
+          nextFetching={nextFetching}
+        />
       )}
     </>
   );

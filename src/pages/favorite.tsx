@@ -1,7 +1,8 @@
-import { Spinner, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Spinner, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import React, { useState } from "react";
 import { PublicQuoteItem } from "../components/PublicQuoteItem";
+import { useAuth } from "../hooks/useAuth";
 import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
 import { Tag } from "../type/Tag";
 
@@ -12,12 +13,25 @@ interface Props {
 const Favorite: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
   const { favoriteQuotes, loading } = useFavoriteQuotes();
+  const { user, loading: userLoading } = useAuth();
+
+  if (userLoading) {
+    <Spinner />;
+  }
 
   return (
     <>
-      <Text fontSize="xl" fontWeight="bold" mb={10}>
-        Favorite quotes
-      </Text>
+      <Flex>
+        <Avatar
+          size="sm"
+          name={user?.displayName || undefined}
+          src={user?.providerData[0]?.photoURL || undefined}
+          mr={2}
+        />
+        <Text fontSize="xl" mb={10} fontWeight="bold">
+          {user?.displayName} / Favorite Quotes
+        </Text>
+      </Flex>
       {/* <TagInput
         registeredTags={registeredTags}
         addedTags={addedTags}
