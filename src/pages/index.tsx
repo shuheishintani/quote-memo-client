@@ -1,4 +1,4 @@
-import { Box, Spinner, Text } from "@chakra-ui/react";
+import { Box, Spinner, Text, useColorMode } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import React, { useState } from "react";
 import { PublicQuoteItem } from "../components/PublicQuoteItem";
@@ -14,6 +14,8 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { publicQuotes, loading } = usePublicQuotes(addedTags, currentPage);
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
 
   return (
     <>
@@ -38,13 +40,19 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
       {loading ? (
         <Spinner mb={24} />
       ) : (
-        <Text
-          fontSize="sm"
-          mb={24}
+        <Box
+          borderRadius="md"
+          cursor="pointer"
+          maxWidth="400px"
+          mx="auto"
+          bg={isDark ? "#1B212C" : "white"}
           onClick={() => setCurrentPage((prev) => prev + 1)}
+          mb={24}
         >
-          もっと読む
-        </Text>
+          <Text fontSize="sm" align="center" py={2}>
+            ＋ さらに読み込む
+          </Text>
+        </Box>
       )}
     </>
   );

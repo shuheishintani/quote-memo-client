@@ -26,6 +26,8 @@ import { useSignout } from "../hooks/useSignout";
 import { useSignin } from "../hooks/useSignin";
 import { DarkModeSwitch } from "./DarkModeSwitch";
 import { RiQuillPenLine } from "react-icons/ri";
+import { BiLogOutCircle } from "react-icons/bi";
+import { AiOutlineSetting } from "react-icons/ai";
 
 export const Navbar: React.VFC = () => {
   const { user } = useAuth();
@@ -83,8 +85,14 @@ export const Navbar: React.VFC = () => {
                   </Box>
                 </MenuButton>
                 <MenuList>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                  <MenuItem>Config</MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <Icon as={BiLogOutCircle} mr={2} w={6} h={6} />
+                    Logout
+                  </MenuItem>
+                  <MenuItem onClick={() => router.push("/config")}>
+                    <Icon as={AiOutlineSetting} mr={2} w={6} h={6} />
+                    Config
+                  </MenuItem>
                 </MenuList>
               </Menu>
             ) : (

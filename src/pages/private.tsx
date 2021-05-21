@@ -1,4 +1,11 @@
-import { Avatar, Box, Flex, Spinner, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Flex,
+  Spinner,
+  Text,
+  useColorMode,
+} from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import React, { useState } from "react";
 import { QuoteItem } from "../components/QuoteItem";
@@ -16,6 +23,8 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
   const { quotes, setCurrentPage, fetching, nextFetching } =
     useQuotes(addedTags);
   const { user, loading: userLoading } = useAuth();
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === "dark";
 
   if (userLoading) {
     <Spinner />;
@@ -59,13 +68,19 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
               {nextFetching ? (
                 <Spinner mb={24} />
               ) : (
-                <Text
-                  fontSize="sm"
-                  mb={24}
+                <Box
+                  borderRadius="md"
+                  cursor="pointer"
+                  maxWidth="400px"
+                  mx="auto"
+                  bg={isDark ? "#1B212C" : "white"}
                   onClick={() => setCurrentPage((prev) => prev + 1)}
+                  mb={24}
                 >
-                  もっと読む
-                </Text>
+                  <Text fontSize="sm" align="center" py={2}>
+                    ＋ さらに読み込む
+                  </Text>
+                </Box>
               )}
             </>
           )}

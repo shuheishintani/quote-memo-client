@@ -1,7 +1,7 @@
 import { Icon, useColorMode } from "@chakra-ui/react";
 import React from "react";
 import { BiMoon } from "react-icons/bi";
-import { FaSun } from "react-icons/fa";
+import { FiSun } from "react-icons/fi";
 
 export const DarkModeSwitch: React.VFC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -10,7 +10,7 @@ export const DarkModeSwitch: React.VFC = () => {
     <>
       {isDark ? (
         <Icon
-          as={FaSun}
+          as={FiSun}
           cursor="pointer"
           mr={2}
           w={6}
