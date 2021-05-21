@@ -9,6 +9,7 @@ export const useQuotes = (tags: string[]) => {
   const { quotes, setQuotes } = useContext(QuotesContext);
   const [fetching, setFetching] = useState<boolean>(false);
   const [nextFetching, setNextFetching] = useState<boolean>(false);
+  const [next, setNext] = useState<boolean>(true);
   const { currentPage, setCurrentPage } = useContext(PageContext);
   const { customAxios } = useAxios();
   const isInitialMount = useRef(true);
@@ -28,6 +29,9 @@ export const useQuotes = (tags: string[]) => {
       await sleep(1000);
       const response = await customAxios.get(url);
       if (response?.status === 200) {
+        if (response.data.length < 5) {
+          setNext(false);
+        }
         setQuotes(response.data);
       }
       setFetching(false);
@@ -51,11 +55,14 @@ export const useQuotes = (tags: string[]) => {
       await sleep(1000);
       const response = await customAxios.get(url);
       if (response?.status === 200) {
+        if (response.data.length < 5) {
+          setNext(false);
+        }
         setQuotes((prev) => [...prev, ...response.data]);
       }
       setNextFetching(false);
     }
   }, [currentPage]);
 
-  return { quotes, setCurrentPage, fetching, nextFetching };
+  return { quotes, setCurrentPage, fetching, nextFetching, next };
 };
