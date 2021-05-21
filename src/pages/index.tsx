@@ -15,8 +15,6 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { publicQuotes, loading } = usePublicQuotes(addedTags, currentPage);
 
-  console.log(publicQuotes);
-
   return (
     <>
       <Text fontSize="xl" fontWeight="bold" mb={10}>
@@ -26,6 +24,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
         registeredTags={registeredTags}
         addedTags={addedTags}
         setAddedTags={setAddedTags}
+        setCurrentPage={setCurrentPage}
       />
       <Box mt={24} />
       {publicQuotes &&
@@ -37,7 +36,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
           />
         ))}
       {loading ? (
-        <Spinner />
+        <Spinner mb={24} />
       ) : (
         <Text
           fontSize="sm"

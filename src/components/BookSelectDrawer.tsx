@@ -60,7 +60,6 @@ export const BookSelectDrawer: React.VFC<Props> = ({
         page: "1",
       };
       const books = await fetchBooks(fetchBooksInput);
-      console.log(books);
       setLoading(false);
       setBooks(books);
     }

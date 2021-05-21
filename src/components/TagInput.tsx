@@ -15,12 +15,14 @@ interface Props {
   registeredTags: string[];
   addedTags: string[];
   setAddedTags: React.Dispatch<React.SetStateAction<string[]>>;
+  setCurrentPage?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const TagInput: NextPage<Props> = ({
   registeredTags,
   addedTags,
   setAddedTags,
+  setCurrentPage,
 }) => {
   const { colorMode } = useColorMode();
   const bgColor = { light: "gray.50", dark: "gray.900" };
@@ -33,6 +35,7 @@ export const TagInput: NextPage<Props> = ({
       setAddedTags((prev) => [...new Set([...prev, currentTag])]);
       setCurrentTag("");
       setSuggestedTags([]);
+      setCurrentPage && setCurrentPage(1);
     }
   };
 
@@ -40,15 +43,16 @@ export const TagInput: NextPage<Props> = ({
     setAddedTags((prev) => [...new Set([...prev, selectedTag])]);
     setCurrentTag("");
     setSuggestedTags([]);
+    setCurrentPage && setCurrentPage(1);
   };
 
   const handleDeleteTag = (tag: string) => {
     setAddedTags((prev) => prev.filter((t) => t !== tag));
+    setCurrentPage && setCurrentPage(1);
   };
 
   const handleChangeTag = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value) {
-      console.log(e.target.value);
       setSuggestedTags(matchSorter(registeredTags, e.target.value).slice(0, 5));
     } else {
       setSuggestedTags([]);

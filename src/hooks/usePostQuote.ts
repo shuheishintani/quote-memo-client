@@ -5,7 +5,6 @@ import { sleep } from "../util/sleep";
 import { useAxios } from "./useAxios";
 
 export const usePostQuote = () => {
-  console.log("usePostQuote");
   const { customAxios } = useAxios();
   const [processing, setProcessing] = useState<boolean>(false);
   const { setQuotes } = useContext(QuotesContext);

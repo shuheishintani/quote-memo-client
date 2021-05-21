@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { QuoteItem } from "../components/QuoteItem";
 import { TagInput } from "../components/TagInput";
 import { useAuth } from "../hooks/useAuth";
-import { usePublicQuotes } from "../hooks/usePublicQuotes";
 import { useQuotes } from "../hooks/useQuotes";
 import { Tag } from "../type/Tag";
 
@@ -14,8 +13,8 @@ interface Props {
 
 const Index: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const { quotes, loading: quotesLoading } = useQuotes(addedTags, currentPage);
+  const { quotes, setCurrentPage, fetching, nextFetching } =
+    useQuotes(addedTags);
   const { user, loading: userLoading } = useAuth();
 
   if (userLoading) {
@@ -42,26 +41,33 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
             registeredTags={registeredTags}
             addedTags={addedTags}
             setAddedTags={setAddedTags}
+            setCurrentPage={setCurrentPage}
           />
           <Box mt={24} />
-          {quotes &&
-            quotes.map((quote) => (
-              <QuoteItem
-                key={quote.id}
-                quote={quote}
-                setAddedTags={setAddedTags}
-              />
-            ))}
-          {quotesLoading ? (
+          {fetching ? (
             <Spinner />
           ) : (
-            <Text
-              fontSize="sm"
-              mb={24}
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-            >
-              もっと読む
-            </Text>
+            <>
+              {quotes &&
+                quotes.map((quote) => (
+                  <QuoteItem
+                    key={quote.id}
+                    quote={quote}
+                    setAddedTags={setAddedTags}
+                  />
+                ))}
+              {nextFetching ? (
+                <Spinner mb={24} />
+              ) : (
+                <Text
+                  fontSize="sm"
+                  mb={24}
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                >
+                  もっと読む
+                </Text>
+              )}
+            </>
           )}
         </>
       )}

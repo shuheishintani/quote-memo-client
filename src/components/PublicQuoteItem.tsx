@@ -4,11 +4,11 @@ import {
   Divider,
   Flex,
   Icon,
+  Link,
   Spinner,
   Text,
-  Link,
 } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useAddFavoriteQuote } from "../hooks/useAddFavoriteQuote";
@@ -16,7 +16,6 @@ import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
 import { useRemoveFavoriteQuote } from "../hooks/useRemoveFavoriteQuote";
 import { Quote } from "../type/Quote";
 import { TagList } from "./TagList";
-import NextLink from "next/link";
 
 interface Props {
   quote: Quote;
@@ -29,8 +28,6 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
   const { removeFavoriteQuote, processing: removeProcessing } =
     useRemoveFavoriteQuote();
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-
-  console.log(quote);
 
   useEffect(() => {
     const isFavorite = favoriteQuotes

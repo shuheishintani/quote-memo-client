@@ -18,7 +18,6 @@ export const useSignin: () => {
     );
     userInfo.user?.getIdToken().then((token: string) => {
       window.localStorage.setItem("token", token);
-      console.log(userInfo.user);
       const profile = userInfo.user?.providerData[0];
       const userInput = {
         id: userInfo.user?.uid,

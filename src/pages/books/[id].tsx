@@ -15,7 +15,6 @@ interface Props {
 }
 
 const BookDetail: NextPage<Props> = ({ book }) => {
-  console.log(book);
   return (
     <>
       <Text fontSize="xl" mb={10} fontWeight="bold">

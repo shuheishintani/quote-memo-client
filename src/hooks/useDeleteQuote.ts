@@ -4,7 +4,6 @@ import { sleep } from "../util/sleep";
 import { useAxios } from "./useAxios";
 
 export const useDeleteQuote = () => {
-  console.log("useDeleteQuote");
   const { customAxios } = useAxios();
   const [loading, setLoading] = useState<boolean>(false);
   const { setQuotes } = useContext(QuotesContext);

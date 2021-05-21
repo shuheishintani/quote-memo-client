@@ -9,24 +9,39 @@ export const usePublicQuotes = (tags: string[], page: number) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { customAxios } = useAxios();
 
-  console.log(publicQuotes.length);
+  useEffectAsync(async () => {
+    if (page === 1) {
+      const query = tags.join(",");
+      const url =
+        tags.length > 0
+          ? `/api/public/quotes?page=${page}&tags=${query}`
+          : `api/public/quotes?page=${page}`;
+      setLoading(true);
+      await sleep(1000);
+      const response = await customAxios.get(url);
+      if (response?.status === 200) {
+        setPublicQuotes(response.data);
+      }
+      setLoading(false);
+    }
+  }, [tags]);
 
   useEffectAsync(async () => {
-    const query = tags.join(",");
-    const url =
-      tags.length > 0
-        ? `/api/public/quotes?page=${page}tags=${query}`
-        : `api/public/quotes?page=${page}`;
-    setLoading(true);
-    await sleep(1000);
-    const response = await customAxios.get(url);
-    if (response?.status === 200) {
-      setPublicQuotes((prev) => [...prev, ...response.data]);
+    if (page !== 1) {
+      const query = tags.join(",");
+      const url =
+        tags.length > 0
+          ? `/api/public/quotes?page=${page}&tags=${query}`
+          : `api/public/quotes?page=${page}`;
+      setLoading(true);
+      await sleep(1000);
+      const response = await customAxios.get(url);
+      if (response?.status === 200) {
+        setPublicQuotes((prev) => [...prev, ...response.data]);
+      }
+      setLoading(false);
     }
-    setLoading(false);
-  }, [tags, page]);
-
-  console.log("hoge");
+  }, [page]);
 
   return { publicQuotes, loading };
 };
