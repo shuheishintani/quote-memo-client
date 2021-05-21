@@ -15,6 +15,7 @@ export const DarkModeSwitch: React.VFC = () => {
           mr={2}
           w={6}
           h={6}
+          color="gray.400"
           onClick={toggleColorMode}
         />
       ) : (
@@ -24,6 +25,7 @@ export const DarkModeSwitch: React.VFC = () => {
           mr={2}
           w={6}
           h={6}
+          color="gray.600"
           onClick={toggleColorMode}
         />
       )}

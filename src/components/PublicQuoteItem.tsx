@@ -12,7 +12,6 @@ import NextLink from "next/link";
 import React, { useEffect, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useAddFavoriteQuote } from "../hooks/useAddFavoriteQuote";
-import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
 import { useRemoveFavoriteQuote } from "../hooks/useRemoveFavoriteQuote";
 import { Quote } from "../type/Quote";
 import { TagList } from "./TagList";
@@ -20,10 +19,14 @@ import { TagList } from "./TagList";
 interface Props {
   quote: Quote;
   setAddedTags?: React.Dispatch<React.SetStateAction<string[]>>;
+  favoriteQuotes?: Quote[];
 }
 
-export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
-  const { favoriteQuotes, loading } = useFavoriteQuotes();
+export const PublicQuoteItem: React.VFC<Props> = ({
+  quote,
+  setAddedTags,
+  favoriteQuotes,
+}) => {
   const { addFavoriteQuote, processing: addProcessing } = useAddFavoriteQuote();
   const { removeFavoriteQuote, processing: removeProcessing } =
     useRemoveFavoriteQuote();
@@ -73,7 +76,7 @@ export const PublicQuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
 
             {!favoriteQuotes ? (
               <></>
-            ) : loading || addProcessing || removeProcessing ? (
+            ) : addProcessing || removeProcessing ? (
               <Spinner size="sm" />
             ) : isFavorite ? (
               <Icon

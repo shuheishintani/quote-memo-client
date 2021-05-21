@@ -37,6 +37,7 @@ export const Navbar: React.VFC = () => {
   const router = useRouter();
   const { colorMode } = useColorMode();
   const bgColor = { light: "white", dark: "#1B212C" };
+  const textColor = { light: "black", dark: "white" };
 
   const handleLogout = async () => {
     onOpen();
@@ -86,11 +87,23 @@ export const Navbar: React.VFC = () => {
                 </MenuButton>
                 <MenuList>
                   <MenuItem onClick={handleLogout}>
-                    <Icon as={BiLogOutCircle} mr={2} w={5} h={5} />
+                    <Icon
+                      as={BiLogOutCircle}
+                      mr={2}
+                      w={5}
+                      h={5}
+                      color="gray.500"
+                    />
                     Logout
                   </MenuItem>
                   <MenuItem onClick={() => router.push("/config")}>
-                    <Icon as={AiOutlineSetting} mr={2} w={5} h={5} />
+                    <Icon
+                      as={AiOutlineSetting}
+                      mr={2}
+                      w={5}
+                      h={5}
+                      color="gray.500"
+                    />
                     Config
                   </MenuItem>
                 </MenuList>
@@ -121,6 +134,7 @@ export const Navbar: React.VFC = () => {
           mx={5}
           pb={3}
           borderBottom={router.pathname === "/" ? "2px" : "0px"}
+          color={router.pathname === "/" ? textColor[colorMode] : "gray.500"}
           borderColor="cyan"
           cursor="pointer"
           onClick={() => router.push("/")}
@@ -133,6 +147,11 @@ export const Navbar: React.VFC = () => {
               mr={5}
               pb={3}
               borderBottom={router.pathname === "/private" ? "2px" : "0px"}
+              color={
+                router.pathname === "/private"
+                  ? textColor[colorMode]
+                  : "gray.500"
+              }
               borderColor="cyan"
               cursor="pointer"
               onClick={() => router.push("/private")}
@@ -143,6 +162,11 @@ export const Navbar: React.VFC = () => {
               mr={5}
               pb={3}
               borderBottom={router.pathname === "/favorite" ? "2px" : "0px"}
+              color={
+                router.pathname === "/favorite"
+                  ? textColor[colorMode]
+                  : "gray.500"
+              }
               borderColor="cyan"
               cursor="pointer"
               onClick={() => router.push("/favorite")}

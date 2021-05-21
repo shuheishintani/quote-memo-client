@@ -1,9 +1,11 @@
-import { Box, Spinner, Text, useColorMode } from "@chakra-ui/react";
+import { Box, Spinner, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import React, { useState } from "react";
 import { FetchMoreButton } from "../components/FetchMoreButton";
-import { PublicQuoteItem } from "../components/PublicQuoteItem";
+import { PublicQuotesList } from "../components/PublicQuotesList";
+import { PublicQuotesListWithAuth } from "../components/PublicQuotesListWithAuth";
 import { TagInput } from "../components/TagInput";
+import { useAuth } from "../hooks/useAuth";
 import { usePublicQuotes } from "../hooks/usePublicQuotes";
 import { Tag } from "../type/Tag";
 
@@ -18,6 +20,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
     addedTags,
     currentPage
   );
+  const { user } = useAuth();
 
   return (
     <>
@@ -31,14 +34,17 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
         setCurrentPage={setCurrentPage}
       />
       <Box mt={24} />
-      {publicQuotes &&
-        publicQuotes.map((quote) => (
-          <PublicQuoteItem
-            key={quote.id}
-            quote={quote}
-            setAddedTags={setAddedTags}
-          />
-        ))}
+      {publicQuotes && user ? (
+        <PublicQuotesListWithAuth
+          publicQuotes={publicQuotes}
+          setAddedTags={setAddedTags}
+        />
+      ) : (
+        <PublicQuotesList
+          publicQuotes={publicQuotes}
+          setAddedTags={setAddedTags}
+        />
+      )}
       {fetching ? (
         <Spinner mb={24} />
       ) : (
