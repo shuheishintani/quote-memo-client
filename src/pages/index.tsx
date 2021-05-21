@@ -14,17 +14,15 @@ interface Props {
 const Index: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const { publicQuotes, fetching, nextFetching } = usePublicQuotes(
+  const { publicQuotes, fetching, nextFetching, next } = usePublicQuotes(
     addedTags,
     currentPage
   );
-  const { colorMode } = useColorMode();
-  const isDark = colorMode === "dark";
 
   return (
     <>
       <Text fontSize="xl" fontWeight="bold" mb={10}>
-        Public Quotes
+        All Public Quotes
       </Text>
       <TagInput
         registeredTags={registeredTags}
@@ -47,6 +45,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
         <FetchMoreButton
           setCurrentPage={setCurrentPage}
           nextFetching={nextFetching}
+          next={next}
         />
       )}
     </>

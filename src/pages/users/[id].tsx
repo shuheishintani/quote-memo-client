@@ -1,14 +1,4 @@
-import {
-  Flex,
-  Box,
-  Text,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
-  Avatar,
-} from "@chakra-ui/react";
+import { Avatar, Flex, Text } from "@chakra-ui/react";
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -16,9 +6,8 @@ import {
   NextPage,
 } from "next";
 import React from "react";
-import { Book } from "../../type/Book";
-import Image from "next/image";
 import { PublicQuoteItem } from "../../components/PublicQuoteItem";
+import { Book } from "../../type/Book";
 import { User } from "../../type/User";
 
 interface Props {
@@ -36,7 +25,7 @@ const UserDetail: NextPage<Props> = ({ user }) => {
           mr={2}
         />
         <Text fontSize="xl" mb={10} fontWeight="bold">
-          {user?.username}'s quotes
+          {user?.username} / Public
         </Text>
       </Flex>
       {user &&

@@ -8,6 +8,7 @@ export const usePublicQuotes = (tags: string[], page: number) => {
   const [publicQuotes, setPublicQuotes] = useState<Quote[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
   const [nextFetching, setNextFetching] = useState<boolean>(false);
+  const [next, setNext] = useState<boolean>(true);
   const { customAxios } = useAxios();
 
   useEffectAsync(async () => {
@@ -21,6 +22,9 @@ export const usePublicQuotes = (tags: string[], page: number) => {
       await sleep(1000);
       const response = await customAxios.get(url);
       if (response?.status === 200) {
+        if (response.data.length < 5) {
+          setNext(false);
+        }
         setPublicQuotes(response.data);
       }
       setFetching(false);
@@ -38,11 +42,14 @@ export const usePublicQuotes = (tags: string[], page: number) => {
       await sleep(1000);
       const response = await customAxios.get(url);
       if (response?.status === 200) {
+        if (response.data.length < 5) {
+          setNext(false);
+        }
         setPublicQuotes((prev) => [...prev, ...response.data]);
       }
       setNextFetching(false);
     }
   }, [page]);
 
-  return { publicQuotes, fetching, nextFetching };
+  return { publicQuotes, fetching, nextFetching, next };
 };

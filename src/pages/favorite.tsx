@@ -29,7 +29,7 @@ const Favorite: NextPage<Props> = ({ registeredTags }) => {
           mr={2}
         />
         <Text fontSize="xl" mb={10} fontWeight="bold">
-          {user?.displayName} / Favorite Quotes
+          {user?.displayName} / Favorite
         </Text>
       </Flex>
       {/* <TagInput

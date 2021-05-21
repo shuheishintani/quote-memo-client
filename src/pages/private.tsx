@@ -14,7 +14,7 @@ interface Props {
 
 const Index: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
-  const { quotes, setCurrentPage, fetching, nextFetching } =
+  const { quotes, setCurrentPage, fetching, nextFetching, next } =
     useQuotes(addedTags);
   const { user, loading: userLoading } = useAuth();
 
@@ -32,7 +32,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
           mr={2}
         />
         <Text fontSize="xl" mb={10} fontWeight="bold">
-          {user?.displayName} / Private Quotes
+          {user?.displayName} / Private
         </Text>
       </Flex>
 
@@ -60,6 +60,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
               <FetchMoreButton
                 setCurrentPage={setCurrentPage}
                 nextFetching={nextFetching}
+                next={next}
               />
             </>
           )}

@@ -18,7 +18,7 @@ const BookDetail: NextPage<Props> = ({ book }) => {
   return (
     <>
       <Text fontSize="xl" mb={10} fontWeight="bold">
-        Book Detail
+        {book.title}
       </Text>
       <Flex mb={10}>
         <Image

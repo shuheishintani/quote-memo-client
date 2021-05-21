@@ -4,17 +4,21 @@ import React from "react";
 interface Props {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   nextFetching: boolean;
+  next: boolean;
 }
 
 export const FetchMoreButton: React.VFC<Props> = ({
   setCurrentPage,
   nextFetching,
+  next,
 }) => {
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
   return (
     <Box align="center">
-      {nextFetching ? (
+      {!next ? (
+        <></>
+      ) : nextFetching ? (
         <Spinner />
       ) : (
         <Box
