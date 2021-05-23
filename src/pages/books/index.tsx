@@ -43,11 +43,11 @@ const Books: NextPage<Props> = ({ initialBooks }) => {
   console.log(books);
   return (
     <>
-      <Text fontSize="xl" fontWeight="bold" mb={10}>
-        <Icon as={RiBook3Line} mr={2} w={5} h={5} />
+      <Text fontSize="2xl" fontWeight="bold" mb={10}>
+        <Icon as={RiBook3Line} mr={2} w={6} h={6} />
         Books
       </Text>
-      <Text>書籍から引用を検索</Text>
+      <Text fontWeight="bold">書籍検索</Text>
       <Input
         variant="flushed"
         placeholder="タイトル・著者名を入力..."

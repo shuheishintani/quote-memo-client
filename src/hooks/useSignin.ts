@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { auth } from "../config/firebase/client";

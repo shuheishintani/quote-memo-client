@@ -29,7 +29,7 @@ export const useQuotes = (tags: string[]) => {
       await sleep(1000);
       const response = await customAxios.get(url);
       if (response?.status === 200) {
-        if (response.data.length === 5) {
+        if (response.data.length === 10) {
           setNext(true);
         } else {
           setNext(false);
@@ -57,7 +57,7 @@ export const useQuotes = (tags: string[]) => {
       await sleep(1000);
       const response = await customAxios.get(url);
       if (response?.status === 200) {
-        if (response.data.length === 5) {
+        if (response.data.length === 10) {
           setNext(true);
         } else {
           setNext(false);

@@ -1,6 +1,6 @@
-import { Box, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
+import { Box, Icon, Spinner, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
-import React, { useState } from "react";
+import React from "react";
 import { AiOutlineTag } from "react-icons/ai";
 import { FetchMoreButton } from "../components/FetchMoreButton";
 import { PublicQuotesList } from "../components/PublicQuotesList";
@@ -15,18 +15,21 @@ interface Props {
 }
 
 const Index: NextPage<Props> = ({ registeredTags }) => {
-  const [addedTags, setAddedTags] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const { publicQuotes, fetching, nextFetching, next } = usePublicQuotes(
+  const {
+    publicQuotes,
+    fetching,
+    nextFetching,
+    next,
+    setCurrentPage,
     addedTags,
-    currentPage
-  );
+    setAddedTags,
+  } = usePublicQuotes();
   const { user } = useAuth();
 
   return (
     <>
-      <Text fontSize="xl" fontWeight="bold" mb={10}>
-        <Icon as={AiOutlineTag} mr={2} w={5} h={5} />
+      <Text fontSize="2xl" fontWeight="bold" mb={10}>
+        <Icon as={AiOutlineTag} mr={2} w={6} h={6} />
         Tags
       </Text>
 
@@ -37,39 +40,44 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
         setCurrentPage={setCurrentPage}
       />
       <Box mt={24} />
-      {publicQuotes && user ? (
-        <PublicQuotesListWithAuth
-          publicQuotes={publicQuotes}
-          setAddedTags={setAddedTags}
-        />
-      ) : (
-        <PublicQuotesList
-          publicQuotes={publicQuotes}
-          setAddedTags={setAddedTags}
-        />
-      )}
-      {fetching ? (
-        <Spinner mb={24} />
-      ) : (
-        <FetchMoreButton
-          setCurrentPage={setCurrentPage}
-          nextFetching={nextFetching}
-          next={next}
-        />
-      )}
+      <>
+        {fetching ? (
+          <Spinner mb={24} />
+        ) : (
+          <>
+            {publicQuotes && user ? (
+              <PublicQuotesListWithAuth
+                publicQuotes={publicQuotes}
+                setAddedTags={setAddedTags}
+              />
+            ) : (
+              <PublicQuotesList
+                publicQuotes={publicQuotes}
+                setAddedTags={setAddedTags}
+              />
+            )}
+            <FetchMoreButton
+              setCurrentPage={setCurrentPage}
+              nextFetching={nextFetching}
+              next={next}
+            />
+          </>
+        )}
+      </>
     </>
   );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch(
+  const tagsResponse = await fetch(
     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/public/tags"
   );
-  const data = await response.json();
-  const registeredTags = data.map((tag: Tag) => tag.name);
+  const tags = await tagsResponse.json();
+  const strTags = tags.map((tag: Tag) => tag.name);
+
   return {
     props: {
-      registeredTags: registeredTags,
+      registeredTags: strTags,
     },
   };
 };

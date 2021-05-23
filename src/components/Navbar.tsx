@@ -98,7 +98,7 @@ export const Navbar: React.VFC = () => {
                     />
                     Logout
                   </MenuItem>
-                  <MenuItem onClick={() => router.push("/config")}>
+                  <MenuItem onClick={() => router.push("/setting")}>
                     <Icon
                       as={AiOutlineSetting}
                       mr={2}
@@ -106,7 +106,7 @@ export const Navbar: React.VFC = () => {
                       h={5}
                       color="gray.500"
                     />
-                    Config
+                    Setting
                   </MenuItem>
                 </MenuList>
               </Menu>

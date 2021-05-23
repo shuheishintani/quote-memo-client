@@ -23,8 +23,8 @@ const Favorite: NextPage<Props> = ({ registeredTags }) => {
   return (
     <>
       <Flex align="center" mb={10}>
-        <Text fontSize="xl" fontWeight="bold" mr={2}>
-          <Icon as={AiOutlineHeart} mr={2} w={5} h={5} />
+        <Text fontSize="2xl" fontWeight="bold" mr={2}>
+          <Icon as={AiOutlineHeart} mr={2} w={6} h={6} />
           Favorite
         </Text>
         <Text fontSize="xl" mr={2}>

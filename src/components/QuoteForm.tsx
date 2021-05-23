@@ -135,7 +135,9 @@ const QuoteFrom: React.VFC<Props> = ({
   return (
     <>
       <Box mb={10}>
-        <Text mb={5}>出典</Text>
+        <Text mb={5} fontWeight="bold">
+          出典
+        </Text>
         {book ? (
           <Flex>
             <Image
@@ -195,7 +197,9 @@ const QuoteFrom: React.VFC<Props> = ({
         />
 
         <Box my={10}>
-          <Text mb={2}>本文</Text>
+          <Text mb={2} fontWeight="bold">
+            本文
+          </Text>
           <Textarea name="text" placeholder="本文を入力..." ref={register} />
           <Text color="red.500" fontSize="xs">
             {errors.text && errors.text.message}
@@ -203,7 +207,9 @@ const QuoteFrom: React.VFC<Props> = ({
         </Box>
 
         <Box mb={10}>
-          <Text mb={2}>ページ</Text>
+          <Text mb={2} fontWeight="bold">
+            ページ
+          </Text>
           <Input
             name="page"
             variant="flushed"
@@ -218,7 +224,9 @@ const QuoteFrom: React.VFC<Props> = ({
         </Box>
 
         <Box mb={10}>
-          <Text mb={2}>公開する</Text>
+          <Text mb={2} fontWeight="bold">
+            公開する
+          </Text>
           <Switch color="green" name="published" ref={register} />
         </Box>
 

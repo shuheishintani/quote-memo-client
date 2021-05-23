@@ -4,7 +4,8 @@ import React, { useContext } from "react";
 import QuoteForm from "../../components/QuoteForm";
 import { QuotesContext } from "../../context/QuotesContext";
 import { useUpdateQuote } from "../../hooks/useUpdateQuote";
-import { Text } from "@chakra-ui/react";
+import { Icon, Text } from "@chakra-ui/react";
+import { FiEdit } from "react-icons/fi";
 
 const Edit: NextPage = () => {
   const router = useRouter();
@@ -16,7 +17,8 @@ const Edit: NextPage = () => {
 
   return (
     <>
-      <Text fontSize="xl" mb={10} fontWeight="bold">
+      <Text fontSize="2xl" fontWeight="bold" mr={2} mb={10}>
+        <Icon as={FiEdit} mr={2} w={6} h={6} />
         Edit
       </Text>
       <QuoteForm

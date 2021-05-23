@@ -1,4 +1,4 @@
-import { Flex, Box, Text } from "@chakra-ui/react";
+import { Flex, Box, Text, Icon } from "@chakra-ui/react";
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -9,6 +9,7 @@ import React from "react";
 import { Book } from "../../type/Book";
 import Image from "next/image";
 import { PublicQuoteItem } from "../../components/PublicQuoteItem";
+import { RiBookReadLine } from "react-icons/ri";
 
 interface Props {
   book: Book;
@@ -17,7 +18,8 @@ interface Props {
 const BookDetail: NextPage<Props> = ({ book }) => {
   return (
     <>
-      <Text fontSize="xl" mb={10} fontWeight="bold">
+      <Text fontSize="2xl" fontWeight="bold" mb={10}>
+        <Icon as={RiBookReadLine} mr={2} w={6} h={6} />
         {book.title}
       </Text>
       <Flex mb={10}>

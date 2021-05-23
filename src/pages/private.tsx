@@ -19,6 +19,8 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
     useQuotes(addedTags);
   const { user, loading: userLoading } = useAuth();
 
+  console.log(quotes);
+
   if (userLoading) {
     <Spinner />;
   }
@@ -26,9 +28,9 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
   return (
     <>
       <Flex align="center" mb={10}>
-        <Text fontSize="xl" fontWeight="bold" mr={2}>
-          <Icon as={CgQuoteO} mr={2} w={5} h={5} />
-          My Quotes
+        <Text fontSize="2xl" fontWeight="bold" mr={2}>
+          <Icon as={CgQuoteO} mr={2} w={6} h={6} />
+          Quotes
         </Text>
         <Text fontSize="xl" mr={2}>
           /

@@ -27,6 +27,15 @@ export const FetchMoreButton: React.VFC<Props> = ({
           maxWidth="400px"
           mx="auto"
           bg={isDark ? "#1B212C" : "white"}
+          _hover={
+            isDark
+              ? {
+                  background: "gray.700",
+                }
+              : {
+                  background: "gray.50",
+                }
+          }
           onClick={() => setCurrentPage((prev) => prev + 1)}
           mb={24}
           align="center"

@@ -32,23 +32,23 @@ export const TagInput: NextPage<Props> = ({
   const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
       e.preventDefault();
+      setCurrentPage && setCurrentPage(1);
       setAddedTags((prev) => [...new Set([...prev, currentTag])]);
       setCurrentTag("");
       setSuggestedTags([]);
-      setCurrentPage && setCurrentPage(1);
     }
   };
 
   const handleSelectTag = (selectedTag: string) => {
+    setCurrentPage && setCurrentPage(1);
     setAddedTags((prev) => [...new Set([...prev, selectedTag])]);
     setCurrentTag("");
     setSuggestedTags([]);
-    setCurrentPage && setCurrentPage(1);
   };
 
   const handleDeleteTag = (tag: string) => {
-    setAddedTags((prev) => prev.filter((t) => t !== tag));
     setCurrentPage && setCurrentPage(1);
+    setAddedTags((prev) => prev.filter((t) => t !== tag));
   };
 
   const handleChangeTag = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +62,7 @@ export const TagInput: NextPage<Props> = ({
 
   return (
     <>
-      <Text>タグ検索</Text>
+      <Text fontWeight="bold">タグ検索</Text>
       <Input
         variant="flushed"
         placeholder="タグを入力..."
