@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Flex,
+  Icon,
   Link,
   Menu,
   MenuButton,
@@ -12,22 +13,23 @@ import {
   Modal,
   ModalOverlay,
   Spinner,
-  useDisclosure,
-  WrapItem,
   Text,
   useColorMode,
-  Icon,
+  useDisclosure,
+  WrapItem,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { useAuth } from "../hooks/useAuth";
-import { useSignout } from "../hooks/useSignout";
-import { useSignin } from "../hooks/useSignin";
-import { DarkModeSwitch } from "./DarkModeSwitch";
-import { RiQuillPenLine } from "react-icons/ri";
+import { AiOutlineHeart, AiOutlineSetting, AiOutlineTag } from "react-icons/ai";
 import { BiLogOutCircle } from "react-icons/bi";
-import { AiOutlineSetting } from "react-icons/ai";
+import { CgQuoteO } from "react-icons/cg";
+import { GrFormAdd } from "react-icons/gr";
+import { RiBook3Line, RiQuillPenLine } from "react-icons/ri";
+import { useAuth } from "../hooks/useAuth";
+import { useSignin } from "../hooks/useSignin";
+import { useSignout } from "../hooks/useSignout";
+import { DarkModeSwitch } from "./DarkModeSwitch";
 
 export const Navbar: React.VFC = () => {
   const { user } = useAuth();
@@ -139,7 +141,22 @@ export const Navbar: React.VFC = () => {
           cursor="pointer"
           onClick={() => router.push("/")}
         >
-          Public
+          <Icon as={AiOutlineTag} mr={1} w={4} h={4} />
+          Tags
+        </Text>
+        <Text
+          mr={5}
+          pb={3}
+          borderBottom={router.pathname === "/books" ? "2px" : "0px"}
+          color={
+            router.pathname === "/books" ? textColor[colorMode] : "gray.500"
+          }
+          borderColor="cyan"
+          cursor="pointer"
+          onClick={() => router.push("/books")}
+        >
+          <Icon as={RiBook3Line} mr={1} w={4} h={4} />
+          Books
         </Text>
         {user && (
           <>
@@ -156,7 +173,8 @@ export const Navbar: React.VFC = () => {
               cursor="pointer"
               onClick={() => router.push("/private")}
             >
-              Private
+              <Icon as={CgQuoteO} mr={1} w={4} h={4} />
+              My quotes
             </Text>
             <Text
               mr={5}
@@ -171,6 +189,7 @@ export const Navbar: React.VFC = () => {
               cursor="pointer"
               onClick={() => router.push("/favorite")}
             >
+              <Icon as={AiOutlineHeart} mr={1} w={4} h={4} />
               Favorite
             </Text>
           </>

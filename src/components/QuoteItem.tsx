@@ -1,26 +1,21 @@
 import { DeleteIcon, EditIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Box,
-  Button,
   Divider,
   Flex,
   IconButton,
-  Text,
   Link,
+  Text,
+  Tooltip,
+  useColorMode,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDeleteQuote } from "../hooks/useDeleteQuote";
 import { useUpdateQuote } from "../hooks/useUpdateQuote";
 import { Quote } from "../type/Quote";
 import { TagList } from "./TagList";
-import NextLink from "next/link";
 
 interface Props {
   quote: Quote;
@@ -31,45 +26,33 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
   const { deleteQuote, loading: isDeleting } = useDeleteQuote();
   const { updateQuote, processing: isUpdating } = useUpdateQuote();
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const onClose = () => setIsOpen(false);
-  const cancelRef = useRef(null);
+  const [beforeDelete, setBeforeDelete] = useState<boolean>(false);
+  const { colorMode } = useColorMode();
+  const textColor = { light: "black", dark: "white" };
+
+  useEffect(() => {
+    if (beforeDelete) {
+      setTimeout(() => {
+        setBeforeDelete(false);
+      }, 2000);
+    }
+  }, [beforeDelete]);
 
   const handlePublish = (id: number) => {
     updateQuote({ ...quote, published: !quote.published }, id);
   };
 
+  const handleDelete = (id: number) => {
+    if (!beforeDelete) {
+      setBeforeDelete(true);
+    } else {
+      setBeforeDelete(false);
+      deleteQuote(id);
+    }
+  };
+
   return (
     <>
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              確認
-            </AlertDialogHeader>
-            <AlertDialogBody>本当に削除しますか？</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                キャンセル
-              </Button>
-              <Button
-                colorScheme="red"
-                onClick={() => {
-                  deleteQuote(quote.id);
-                  onClose();
-                }}
-                ml={3}
-              >
-                削除する
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
       <Box key={quote.id} mb={10}>
         <Divider mb={5} />
         <Flex>
@@ -98,22 +81,24 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
           )}
 
           <IconButton
-            aria-label="DeleteIcon"
+            aria-label="EditIcon"
             icon={<EditIcon />}
             mr={4}
             onClick={() => router.push(`/edit/${quote.id}`)}
           />
-          <IconButton
-            aria-label="DeleteIcon"
-            icon={<DeleteIcon />}
-            onClick={() => setIsOpen(true)}
-            isLoading={isDeleting}
-          />
+
+          <Tooltip label={beforeDelete ? "Click to confirm" : ""} fontSize="md">
+            <IconButton
+              aria-label="DeleteIcon"
+              icon={<DeleteIcon />}
+              onClick={() => handleDelete(quote.id)}
+              isLoading={isDeleting}
+              color={beforeDelete ? "red.500" : textColor[colorMode]}
+            />
+          </Tooltip>
         </Flex>
         <Box mb={4} />
-        <Text fontSize="md">
-          {quote.id} {quote.text}
-        </Text>
+        <Text fontSize="md">{quote.text}</Text>
 
         <Box mb={4} />
         <Flex>

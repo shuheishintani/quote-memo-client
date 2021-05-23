@@ -1,6 +1,7 @@
-import { Box, Spinner, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import React, { useState } from "react";
+import { AiOutlineTag } from "react-icons/ai";
 import { FetchMoreButton } from "../components/FetchMoreButton";
 import { PublicQuotesList } from "../components/PublicQuotesList";
 import { PublicQuotesListWithAuth } from "../components/PublicQuotesListWithAuth";
@@ -25,8 +26,10 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
   return (
     <>
       <Text fontSize="xl" fontWeight="bold" mb={10}>
-        All Public Quotes
+        <Icon as={AiOutlineTag} mr={2} w={5} h={5} />
+        Tags
       </Text>
+
       <TagInput
         registeredTags={registeredTags}
         addedTags={addedTags}

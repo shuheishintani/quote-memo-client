@@ -9,7 +9,7 @@ export const useSignout: () => {
 
   const signout = useCallback(async () => {
     await firebase.auth().signOut();
-    router.push("/login");
+    router.push("/");
   }, []);
 
   return { signout };

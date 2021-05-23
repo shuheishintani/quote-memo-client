@@ -1,3 +1,4 @@
+import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -9,7 +10,6 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
-  Icon,
   Input,
   Spinner,
   Stack,
@@ -18,14 +18,13 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import _ from "lodash";
 import Image from "next/image";
 import React, { useContext, useEffect, useState } from "react";
 import { QuotesContext } from "../context/QuotesContext";
-import { useFetchBooks } from "../hooks/useFetchBooks";
+import { useGetExternalBooks } from "../hooks/useGetExternalBooks";
 import { Book } from "../type/Book";
-import { AiOutlineSearch } from "react-icons/ai";
-import { SearchIcon } from "@chakra-ui/icons";
 
 interface Props {
   setBook: React.Dispatch<React.SetStateAction<Book | undefined>>;
@@ -42,7 +41,7 @@ export const BookSelectDrawer: React.VFC<Props> = ({
 }) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { fetchBooks } = useFetchBooks();
+  const { getExternalBooks } = useGetExternalBooks();
   const { quotes } = useContext(QuotesContext);
   const [keyword, setKeyword] = useState("");
   const firstField = React.createRef<HTMLInputElement>();
@@ -59,7 +58,7 @@ export const BookSelectDrawer: React.VFC<Props> = ({
         author: "",
         page: "1",
       };
-      const books = await fetchBooks(fetchBooksInput);
+      const books = await getExternalBooks(fetchBooksInput);
       setLoading(false);
       setBooks(books);
     }
@@ -120,16 +119,20 @@ export const BookSelectDrawer: React.VFC<Props> = ({
                 {!loading && (
                   <Wrap spacing="20px">
                     {books.map((book) => (
-                      <WrapItem key={book.isbn}>
-                        {book.cover_image_url && (
-                          <Image
-                            src={book.cover_image_url}
-                            width={105}
-                            height={148}
-                            onClick={() => handleBookSelect(book)}
-                          />
-                        )}
-                      </WrapItem>
+                      <motion.div whileHover={{ scale: 1.1 }} key={book.id}>
+                        <Box boxShadow="lg">
+                          <WrapItem>
+                            {book.cover_image_url && (
+                              <Image
+                                src={book.cover_image_url}
+                                width={105}
+                                height={148}
+                                onClick={() => handleBookSelect(book)}
+                              />
+                            )}
+                          </WrapItem>
+                        </Box>
+                      </motion.div>
                     ))}
                   </Wrap>
                 )}

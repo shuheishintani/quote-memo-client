@@ -25,7 +25,7 @@ const UserDetail: NextPage<Props> = ({ user }) => {
           mr={2}
         />
         <Text fontSize="xl" mb={10} fontWeight="bold">
-          {user?.username} / Public
+          {user?.username} / Public quotes
         </Text>
       </Flex>
       {user &&

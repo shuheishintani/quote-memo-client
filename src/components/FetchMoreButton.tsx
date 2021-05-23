@@ -15,7 +15,7 @@ export const FetchMoreButton: React.VFC<Props> = ({
   const { colorMode } = useColorMode();
   const isDark = colorMode === "dark";
   return (
-    <Box align="center">
+    <Box align="center" mb={24}>
       {!next ? (
         <></>
       ) : nextFetching ? (

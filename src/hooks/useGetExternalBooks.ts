@@ -1,7 +1,7 @@
 import { Book } from "../type/Book";
 import { useAxios } from "./useAxios";
 
-export const useFetchBooks = () => {
+export const useGetExternalBooks = () => {
   const { customAxios } = useAxios();
 
   type FetchBooksInput = {
@@ -10,7 +10,7 @@ export const useFetchBooks = () => {
     page: string;
   };
 
-  const fetchBooks = async (
+  const getExternalBooks = async (
     fetchBooksInput: FetchBooksInput
   ): Promise<Book[]> => {
     const { title, author, page } = fetchBooksInput;
@@ -34,5 +34,5 @@ export const useFetchBooks = () => {
     }
   };
 
-  return { fetchBooks };
+  return { getExternalBooks };
 };

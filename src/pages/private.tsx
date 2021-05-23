@@ -1,6 +1,7 @@
-import { Avatar, Box, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import React, { useState } from "react";
+import { CgQuoteO } from "react-icons/cg";
 import { FetchMoreButton } from "../components/FetchMoreButton";
 import { QuoteItem } from "../components/QuoteItem";
 import { TagInput } from "../components/TagInput";
@@ -24,16 +25,21 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
 
   return (
     <>
-      <Flex>
+      <Flex align="center" mb={10}>
+        <Text fontSize="xl" fontWeight="bold" mr={2}>
+          <Icon as={CgQuoteO} mr={2} w={5} h={5} />
+          My Quotes
+        </Text>
+        <Text fontSize="xl" mr={2}>
+          /
+        </Text>
         <Avatar
-          size="sm"
+          size="xs"
           name={user?.displayName || undefined}
           src={user?.providerData[0]?.photoURL || undefined}
           mr={2}
         />
-        <Text fontSize="xl" mb={10} fontWeight="bold">
-          {user?.displayName} / Private
-        </Text>
+        <Text fontSize="xl">{user?.displayName}</Text>
       </Flex>
 
       {user && (

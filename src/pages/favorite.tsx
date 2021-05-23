@@ -1,6 +1,7 @@
-import { Avatar, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
 import React, { useState } from "react";
+import { AiOutlineHeart } from "react-icons/ai";
 import { PublicQuoteItem } from "../components/PublicQuoteItem";
 import { useAuth } from "../hooks/useAuth";
 import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
@@ -21,16 +22,21 @@ const Favorite: NextPage<Props> = ({ registeredTags }) => {
 
   return (
     <>
-      <Flex>
+      <Flex align="center" mb={10}>
+        <Text fontSize="xl" fontWeight="bold" mr={2}>
+          <Icon as={AiOutlineHeart} mr={2} w={5} h={5} />
+          Favorite
+        </Text>
+        <Text fontSize="xl" mr={2}>
+          /
+        </Text>
         <Avatar
-          size="sm"
+          size="xs"
           name={user?.displayName || undefined}
           src={user?.providerData[0]?.photoURL || undefined}
           mr={2}
         />
-        <Text fontSize="xl" mb={10} fontWeight="bold">
-          {user?.displayName} / Favorite
-        </Text>
+        <Text fontSize="xl">{user?.displayName}</Text>
       </Flex>
       {/* <TagInput
         registeredTags={registeredTags}
