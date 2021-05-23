@@ -13,7 +13,7 @@ export const usePublicQuotes = () => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
   const { customAxios } = useAxios();
 
-  //addedTagsが変化した時のみ発火(初回マウント時はSSGで注入した初期データを使用)
+  //初回マウント時とaddedTagsが変化した時のみ発火
   useEffectAsync(async () => {
     const query = addedTags.join(",");
     const url =

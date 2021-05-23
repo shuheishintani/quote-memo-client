@@ -19,25 +19,23 @@ export const useQuotes = (tags: string[]) => {
       return;
     }
 
-    if (currentPage === 1) {
-      const query = tags.join(",");
-      const url =
-        tags.length > 0
-          ? `/api/quotes?page=${currentPage}&tags=${query}`
-          : `api/quotes?page=${currentPage}`;
-      setFetching(true);
-      await sleep(1000);
-      const response = await customAxios.get(url);
-      if (response?.status === 200) {
-        if (response.data.length === 10) {
-          setNext(true);
-        } else {
-          setNext(false);
-        }
-        setQuotes(response.data);
+    const query = tags.join(",");
+    const url =
+      tags.length > 0
+        ? `/api/quotes?page=1&tags=${query}`
+        : `api/quotes?page=1`;
+    setFetching(true);
+    await sleep(1000);
+    const response = await customAxios.get(url);
+    if (response?.status === 200) {
+      if (response.data.length === 10) {
+        setNext(true);
+      } else {
+        setNext(false);
       }
-      setFetching(false);
+      setQuotes(response.data);
     }
+    setFetching(false);
   }, [tags]);
 
   useEffectAsync(async () => {
