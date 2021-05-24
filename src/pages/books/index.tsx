@@ -87,7 +87,7 @@ const Books: NextPage<Props> = ({ initialBooks }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch(
-    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/public/books"
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/books"
   );
   const books: Book[] = await response.json();
   const arrangedBooks = books

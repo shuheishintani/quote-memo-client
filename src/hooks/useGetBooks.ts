@@ -6,9 +6,7 @@ export const useGetBooks = () => {
 
   const getBooks = async (keyword: string): Promise<Book[]> => {
     try {
-      const response = await customAxios.get(
-        `/api/public/books?keyword=${keyword}`
-      );
+      const response = await customAxios.get(`/api/books?keyword=${keyword}`);
       return response.data;
     } catch (e) {
       throw new Error("Failed books data");

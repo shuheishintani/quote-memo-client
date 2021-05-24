@@ -22,8 +22,8 @@ export const useQuotes = (tags: string[]) => {
     const query = tags.join(",");
     const url =
       tags.length > 0
-        ? `/api/quotes?page=1&tags=${query}`
-        : `api/quotes?page=1`;
+        ? `/api/quotes/me?page=1&tags=${query}`
+        : `api/quotes/me?page=1`;
     setFetching(true);
     await sleep(1000);
     const response = await customAxios.get(url);
@@ -49,8 +49,8 @@ export const useQuotes = (tags: string[]) => {
       const query = tags.join(",");
       const url =
         tags.length > 0
-          ? `/api/quotes?page=${currentPage}&tags=${query}`
-          : `api/quotes?page=${currentPage}`;
+          ? `/api/quotes/me?page=${currentPage}&tags=${query}`
+          : `api/quotes/me?page=${currentPage}`;
       setNextFetching(true);
       await sleep(1000);
       const response = await customAxios.get(url);

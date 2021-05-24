@@ -38,7 +38,7 @@ const UserDetail: NextPage<Props> = ({ user }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const response = await fetch(
-    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/public/users"
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/users"
   );
   const users = await response.json();
   const paths = users.map((book: Book) => ({
@@ -51,7 +51,7 @@ export const getStaticProps: GetStaticProps = async ({
   params,
 }: GetStaticPropsContext) => {
   const response = await fetch(
-    process.env.NEXT_PUBLIC_API_BASE_URL + `/api/public/users/${params?.id}`
+    process.env.NEXT_PUBLIC_API_BASE_URL + `/api/users/${params?.id}`
   );
   const user = await response.json();
   return {

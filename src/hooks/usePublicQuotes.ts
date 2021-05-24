@@ -18,8 +18,8 @@ export const usePublicQuotes = () => {
     const query = addedTags.join(",");
     const url =
       addedTags.length > 0
-        ? `/api/public/quotes?page=1&tags=${query}`
-        : `api/public/quotes?page=1`;
+        ? `/api/quotes?page=1&tags=${query}`
+        : `api/quotes?page=1`;
     setFetching(true);
     await sleep(1000);
     const response = await customAxios.get(url);
@@ -41,8 +41,8 @@ export const usePublicQuotes = () => {
       const query = addedTags.join(",");
       const url =
         addedTags.length > 0
-          ? `/api/public/quotes?page=${currentPage}&tags=${query}`
-          : `api/public/quotes?page=${currentPage}`;
+          ? `/api/quotes?page=${currentPage}&tags=${query}`
+          : `api/quotes?page=${currentPage}`;
       setNextFetching(true);
       await sleep(1000);
       const response = await customAxios.get(url);

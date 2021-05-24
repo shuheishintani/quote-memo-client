@@ -80,7 +80,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch(
-    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/public/tags"
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/tags"
   );
   const data = await response.json();
   const registeredTags = data.map((tag: Tag) => tag.name);

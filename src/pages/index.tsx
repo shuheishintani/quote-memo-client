@@ -70,7 +70,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   const tagsResponse = await fetch(
-    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/public/tags"
+    process.env.NEXT_PUBLIC_API_BASE_URL + "/api/tags"
   );
   const tags = await tagsResponse.json();
   const strTags = tags.map((tag: Tag) => tag.name);

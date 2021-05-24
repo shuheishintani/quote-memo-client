@@ -16,18 +16,23 @@ export const useSignin: () => {
     const userInfo: firebase.auth.UserCredential = await auth.signInWithPopup(
       provider
     );
-    userInfo.user?.getIdToken().then((token: string) => {
-      window.localStorage.setItem("token", token);
-      const profile = userInfo.user?.providerData[0];
-      const userInput = {
-        id: userInfo.user?.uid,
-        username: profile?.displayName,
-        profile_image_url: profile?.photoURL,
-        provider: profile?.providerId,
-      };
-      customAxios.post("/api/users", userInput);
+    const id_token = await userInfo.user?.getIdToken();
+    const response = await customAxios.post("/api/auth/login", {
+      id_token,
     });
-    router.push("/private");
+
+    const profile = userInfo.user?.providerData[0];
+    const userInput = {
+      id: userInfo.user?.uid,
+      username: profile?.displayName,
+      profile_image_url: profile?.photoURL,
+      provider: profile?.providerId,
+    };
+    await customAxios.post("/api/users", userInput);
+
+    if (response.status === 200) {
+      router.push("/private");
+    }
   }, []);
 
   return { signin };

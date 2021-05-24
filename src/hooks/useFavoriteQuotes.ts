@@ -10,7 +10,7 @@ export const useFavoriteQuotes = () => {
 
   useEffectAsync(async () => {
     setLoading(true);
-    const response = await customAxios.get("/api/quotes/favorite");
+    const response = await customAxios.get("/api/quotes/my_favorite");
     if (response?.status === 200) {
       setFavoriteQuotes(response.data);
     }
