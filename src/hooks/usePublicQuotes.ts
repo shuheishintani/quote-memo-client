@@ -15,6 +15,7 @@ export const usePublicQuotes = () => {
 
   //初回マウント時とaddedTagsが変化した時のみ発火
   useEffectAsync(async () => {
+    let unmounted = false;
     const query = addedTags.join(",");
     const url =
       addedTags.length > 0
@@ -29,13 +30,17 @@ export const usePublicQuotes = () => {
       } else {
         setNext(true);
       }
-      setPublicQuotes(response.data);
+      !unmounted && setPublicQuotes(response.data);
     }
     setFetching(false);
+    return () => {
+      unmounted = true;
+    };
   }, [addedTags]);
 
   //currentPageが2以降に変化した時のみ発火
   useEffectAsync(async () => {
+    let unmounted = false;
     if (currentPage !== 1) {
       const query = addedTags.join(",");
       const url =
@@ -51,10 +56,13 @@ export const usePublicQuotes = () => {
         } else {
           setNext(true);
         }
-        setPublicQuotes((prev) => [...prev, ...response.data]);
+        !unmounted && setPublicQuotes((prev) => [...prev, ...response.data]);
       }
       setNextFetching(false);
     }
+    return () => {
+      unmounted = true;
+    };
   }, [currentPage]);
 
   return {

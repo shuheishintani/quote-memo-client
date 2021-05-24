@@ -14,8 +14,14 @@ export const useQuotes = (tags: string[]) => {
   const { customAxios } = useAxios();
   const isInitialMount = useRef(true);
 
+  console.log(next);
+
   useEffectAsync(async () => {
+    let unmounted = false;
     if (isInitialMount.current && quotes.length > 0) {
+      if (quotes.length % 10 === 0) {
+        setNext(true);
+      }
       return;
     }
 
@@ -33,12 +39,16 @@ export const useQuotes = (tags: string[]) => {
       } else {
         setNext(false);
       }
-      setQuotes(response.data);
+      !unmounted && setQuotes(response.data);
     }
     setFetching(false);
+    return () => {
+      unmounted = true;
+    };
   }, [tags]);
 
   useEffectAsync(async () => {
+    let unmounted = false;
     if (isInitialMount.current) {
       isInitialMount.current = false;
       return;
@@ -60,10 +70,13 @@ export const useQuotes = (tags: string[]) => {
         } else {
           setNext(false);
         }
-        setQuotes((prev) => [...prev, ...response.data]);
+        !unmounted && setQuotes((prev) => [...prev, ...response.data]);
       }
       setNextFetching(false);
     }
+    return () => {
+      unmounted = true;
+    };
   }, [currentPage]);
 
   return { quotes, setCurrentPage, fetching, nextFetching, next };

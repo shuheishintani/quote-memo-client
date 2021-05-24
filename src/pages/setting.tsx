@@ -43,7 +43,6 @@ const Config: NextPage = () => {
         <Button
           onClick={() => deleteUser()}
           colorScheme="red"
-          variant="outline"
           isLoading={processing}
         >
           アカウントを削除する
