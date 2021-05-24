@@ -24,7 +24,6 @@ import React from "react";
 import { AiOutlineHeart, AiOutlineSetting, AiOutlineTag } from "react-icons/ai";
 import { BiLogOutCircle } from "react-icons/bi";
 import { CgQuoteO } from "react-icons/cg";
-import { GrFormAdd } from "react-icons/gr";
 import { RiBook3Line, RiQuillPenLine } from "react-icons/ri";
 import { useAuth } from "../hooks/useAuth";
 import { useSignin } from "../hooks/useSignin";

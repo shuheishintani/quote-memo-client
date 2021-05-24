@@ -29,7 +29,6 @@ export const usePublicQuotes = () => {
       } else {
         setNext(true);
       }
-      console.log(response.data);
       setPublicQuotes(response.data);
     }
     setFetching(false);
