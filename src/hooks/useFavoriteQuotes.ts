@@ -9,12 +9,16 @@ export const useFavoriteQuotes = () => {
   const { customAxios } = useAxios();
 
   useEffectAsync(async () => {
+    let unmounted = false;
     setLoading(true);
     const response = await customAxios.get("/api/quotes/my_favorite");
     if (response?.status === 200) {
-      setFavoriteQuotes(response.data);
+      !unmounted && setFavoriteQuotes(response.data);
     }
     setLoading(false);
+    return () => {
+      unmounted = true;
+    };
   }, []);
 
   return { favoriteQuotes, loading };

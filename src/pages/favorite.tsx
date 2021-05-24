@@ -14,10 +14,10 @@ interface Props {
 const Favorite: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
   const { favoriteQuotes, loading } = useFavoriteQuotes();
-  const { user, loading: userLoading } = useAuth();
+  const { user } = useAuth();
 
-  if (userLoading) {
-    <Spinner />;
+  if (!user) {
+    return <Spinner />;
   }
 
   return (
@@ -30,13 +30,10 @@ const Favorite: NextPage<Props> = ({ registeredTags }) => {
         <Text fontSize="xl" mr={2}>
           /
         </Text>
-        <Avatar
-          size="xs"
-          name={user?.displayName || undefined}
-          src={user?.providerData[0]?.photoURL || undefined}
-          mr={2}
-        />
-        <Text fontSize="xl">{user?.displayName}</Text>
+        {user.providerData[0]?.photoURL && (
+          <Avatar size="xs" src={user.providerData[0]?.photoURL} mr={2} />
+        )}
+        <Text fontSize="xl">{user.displayName}</Text>
       </Flex>
       {/* <TagInput
         registeredTags={registeredTags}

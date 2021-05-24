@@ -24,15 +24,18 @@ export const usePublicQuotes = () => {
     setFetching(true);
     await sleep(1000);
     const response = await customAxios.get(url);
-    if (response?.status === 200) {
-      if (response.data.length < 10) {
-        setNext(false);
-      } else {
-        setNext(true);
+    if (!unmounted) {
+      if (response?.status === 200) {
+        if (response.data.length < 10) {
+          setNext(false);
+        } else {
+          setNext(true);
+        }
+        setPublicQuotes(response.data);
       }
-      !unmounted && setPublicQuotes(response.data);
+      setFetching(false);
     }
-    setFetching(false);
+
     return () => {
       unmounted = true;
     };
@@ -50,15 +53,17 @@ export const usePublicQuotes = () => {
       setNextFetching(true);
       await sleep(1000);
       const response = await customAxios.get(url);
-      if (response?.status === 200) {
-        if (response.data.length < 10) {
-          setNext(false);
-        } else {
-          setNext(true);
+      if (!unmounted) {
+        if (response?.status === 200) {
+          if (response.data.length < 10) {
+            setNext(false);
+          } else {
+            setNext(true);
+          }
+          setPublicQuotes((prev) => [...prev, ...response.data]);
         }
-        !unmounted && setPublicQuotes((prev) => [...prev, ...response.data]);
+        setNextFetching(false);
       }
-      setNextFetching(false);
     }
     return () => {
       unmounted = true;

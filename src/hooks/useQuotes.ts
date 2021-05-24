@@ -19,7 +19,7 @@ export const useQuotes = (tags: string[]) => {
   useEffectAsync(async () => {
     let unmounted = false;
     if (isInitialMount.current && quotes.length > 0) {
-      if (quotes.length % 10 === 0) {
+      if (quotes.length >= 10) {
         setNext(true);
       }
       return;
@@ -33,15 +33,18 @@ export const useQuotes = (tags: string[]) => {
     setFetching(true);
     await sleep(1000);
     const response = await customAxios.get(url);
-    if (response?.status === 200) {
-      if (response.data.length === 10) {
-        setNext(true);
-      } else {
-        setNext(false);
+    if (!unmounted) {
+      if (response?.status === 200) {
+        if (response.data.length === 10) {
+          setNext(true);
+        } else {
+          setNext(false);
+        }
+        setQuotes(response.data);
       }
-      !unmounted && setQuotes(response.data);
+      setFetching(false);
     }
-    setFetching(false);
+
     return () => {
       unmounted = true;
     };
@@ -64,15 +67,17 @@ export const useQuotes = (tags: string[]) => {
       setNextFetching(true);
       await sleep(1000);
       const response = await customAxios.get(url);
-      if (response?.status === 200) {
-        if (response.data.length === 10) {
-          setNext(true);
-        } else {
-          setNext(false);
+      if (!unmounted) {
+        if (response?.status === 200) {
+          if (response.data.length === 10) {
+            setNext(true);
+          } else {
+            setNext(false);
+          }
+          setQuotes((prev) => [...prev, ...response.data]);
         }
-        !unmounted && setQuotes((prev) => [...prev, ...response.data]);
+        setNextFetching(false);
       }
-      setNextFetching(false);
     }
     return () => {
       unmounted = true;
