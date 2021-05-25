@@ -30,7 +30,7 @@ export const useGetExternalBooks = () => {
       const response = await customAxios.get(url);
       return response.data;
     } catch (e) {
-      throw new Error("Failed books data");
+      throw new Error("Failed to fetch external books");
     }
   };
 

@@ -58,7 +58,6 @@ export const useQuotes = (tags: string[]) => {
     }
 
     if (currentPage !== 1) {
-      console.log(currentPage, "追加フェッチ");
       const query = tags.join(",");
       const url =
         tags.length > 0

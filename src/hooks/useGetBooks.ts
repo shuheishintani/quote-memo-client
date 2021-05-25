@@ -9,7 +9,7 @@ export const useGetBooks = () => {
       const response = await customAxios.get(`/api/books?keyword=${keyword}`);
       return response.data;
     } catch (e) {
-      throw new Error("Failed books data");
+      throw new Error("Failed to fetch books");
     }
   };
 
