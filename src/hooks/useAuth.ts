@@ -11,7 +11,7 @@ export const useAuth: () => {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
 
-  console.log(user, loading);
+  console.log(user?.uid);
 
   useEffect(() => {
     if (!user && !loading && router.pathname !== "index") {

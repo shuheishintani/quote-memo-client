@@ -1,7 +1,19 @@
-import { Box, Button, Icon, Text, useColorMode } from "@chakra-ui/react";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Box,
+  Button,
+  Icon,
+  Text,
+  useColorMode,
+} from "@chakra-ui/react";
 import moment from "moment";
 import { NextPage } from "next";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { useAuth } from "../hooks/useAuth";
 import { useDeleteUser } from "../hooks/useDeleteUser";
@@ -12,6 +24,10 @@ const Config: NextPage = () => {
   const { colorMode } = useColorMode();
   const { getPrivateQuotesForExport } = useGetPrivateQuotesForExport();
   const { user } = useAuth();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => setIsOpen(false);
+  const cancelRef = useRef(null);
 
   const handleExport = async () => {
     const quotes = await getPrivateQuotesForExport();
@@ -61,13 +77,42 @@ const Config: NextPage = () => {
           あなたが作成した引用やお気に入りに追加した引用はすべて削除されます。
         </Text>
         <Button
-          onClick={() => deleteUser()}
           colorScheme="red"
           isLoading={processing}
+          onClick={() => setIsOpen(true)}
         >
           アカウントを削除する
         </Button>
       </Box>
+
+      <>
+        <AlertDialog
+          isOpen={isOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={onClose}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                アカウントの削除
+              </AlertDialogHeader>
+
+              <AlertDialogBody>
+                削除されたデータは復元することができません。本当によろしいですか？
+              </AlertDialogBody>
+
+              <AlertDialogFooter>
+                <Button ref={cancelRef} onClick={onClose}>
+                  キャンセル
+                </Button>
+                <Button colorScheme="red" ml={3} onClick={() => deleteUser()}>
+                  削除する
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      </>
     </>
   );
 };

@@ -118,8 +118,8 @@ export const BookSelectDrawer: React.VFC<Props> = ({
                 {loading && <Spinner />}
                 {!loading && (
                   <Wrap spacing="20px">
-                    {books.map((book) => (
-                      <motion.div whileHover={{ scale: 1.1 }} key={book.id}>
+                    {books.map((book, i) => (
+                      <motion.div whileHover={{ scale: 1.1 }} key={i}>
                         <Box boxShadow="lg">
                           <WrapItem>
                             {book.cover_image_url && (

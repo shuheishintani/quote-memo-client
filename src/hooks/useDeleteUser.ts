@@ -12,12 +12,14 @@ export const useDeleteUser = () => {
     if (!user) {
       return false;
     }
-    await user.delete();
     setProcessing(true);
     await sleep(1000);
     const response = await customAxios.delete("/api/users");
+    await customAxios.post("/api/auth/logout");
+
     setProcessing(false);
     if (response?.status === 200) {
+      await user.delete();
       return true;
     }
     return false;
