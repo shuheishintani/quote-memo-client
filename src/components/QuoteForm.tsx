@@ -102,8 +102,9 @@ const QuoteFrom: React.VFC<Props> = ({
       if (success) {
         toast({
           title: `新規作成しました！`,
-          status: "success",
           position: "bottom-left",
+          status: "success",
+          variant: "subtle",
           isClosable: true,
         });
         reset();
@@ -124,8 +125,8 @@ const QuoteFrom: React.VFC<Props> = ({
       if (success) {
         toast({
           title: `編集内容を保存しました！`,
-          status: "success",
           position: "bottom-left",
+          variant: "subtle",
           isClosable: true,
         });
       }

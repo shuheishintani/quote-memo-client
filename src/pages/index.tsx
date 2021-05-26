@@ -7,6 +7,7 @@ import { PublicQuotesList } from "../components/PublicQuotesList";
 import { PublicQuotesListWithAuth } from "../components/PublicQuotesListWithAuth";
 import { TagInput } from "../components/TagInput";
 import { useAuth } from "../hooks/useAuth";
+import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
 import { usePublicQuotes } from "../hooks/usePublicQuotes";
 import { Tag } from "../type/Tag";
 
@@ -24,6 +25,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
     addedTags,
     setAddedTags,
   } = usePublicQuotes();
+  const { favoriteQuotes } = useFavoriteQuotes();
   const { user } = useAuth();
 
   return (
@@ -45,10 +47,11 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
           <Spinner mb={24} />
         ) : (
           <>
-            {publicQuotes && user ? (
+            {user ? (
               <PublicQuotesListWithAuth
                 publicQuotes={publicQuotes}
                 setAddedTags={setAddedTags}
+                favoriteQuotes={favoriteQuotes}
               />
             ) : (
               <PublicQuotesList
@@ -56,6 +59,10 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
                 setAddedTags={setAddedTags}
               />
             )}
+            <PublicQuotesList
+              publicQuotes={publicQuotes}
+              setAddedTags={setAddedTags}
+            />
             <FetchMoreButton
               setCurrentPage={setCurrentPage}
               nextFetching={nextFetching}

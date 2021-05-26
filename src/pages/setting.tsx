@@ -10,9 +10,11 @@ import {
   Icon,
   Text,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { AiOutlineSetting } from "react-icons/ai";
 import { useAuth } from "../hooks/useAuth";
@@ -28,6 +30,8 @@ const Config: NextPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = useRef(null);
+  const toast = useToast();
+  const router = useRouter();
 
   const handleExport = async () => {
     const quotes = await getPrivateQuotesForExport();
@@ -42,6 +46,20 @@ const Config: NextPage = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleDelete = async () => {
+    const success = await deleteUser();
+    if (success) {
+      router.push("/");
+      toast({
+        title: `ユーザーを削除しました`,
+        position: "bottom-left",
+        status: "info",
+        variant: "subtle",
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -76,11 +94,7 @@ const Config: NextPage = () => {
         <Text fontSize="sm" mb={5}>
           あなたが作成した引用やお気に入りに追加した引用はすべて削除されます。
         </Text>
-        <Button
-          colorScheme="red"
-          isLoading={processing}
-          onClick={() => setIsOpen(true)}
-        >
+        <Button colorScheme="red" onClick={() => setIsOpen(true)}>
           アカウントを削除する
         </Button>
       </Box>
@@ -105,7 +119,12 @@ const Config: NextPage = () => {
                 <Button ref={cancelRef} onClick={onClose}>
                   キャンセル
                 </Button>
-                <Button colorScheme="red" ml={3} onClick={() => deleteUser()}>
+                <Button
+                  colorScheme="red"
+                  ml={3}
+                  onClick={handleDelete}
+                  isLoading={processing}
+                >
                   削除する
                 </Button>
               </AlertDialogFooter>

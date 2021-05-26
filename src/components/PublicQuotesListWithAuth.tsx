@@ -1,18 +1,18 @@
 import React from "react";
-import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
 import { Quote } from "../type/Quote";
 import { PublicQuoteItem } from "./PublicQuoteItem";
 
 interface Props {
   publicQuotes: Quote[];
   setAddedTags?: React.Dispatch<React.SetStateAction<string[]>>;
+  favoriteQuotes: Quote[];
 }
 
 export const PublicQuotesListWithAuth: React.VFC<Props> = ({
   publicQuotes,
   setAddedTags,
+  favoriteQuotes,
 }) => {
-  const { favoriteQuotes } = useFavoriteQuotes();
   return (
     <>
       {publicQuotes.map((quote) => (

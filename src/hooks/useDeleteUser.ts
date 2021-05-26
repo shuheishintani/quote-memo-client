@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { QuotesContext } from "../context/QuotesContext";
 import { sleep } from "../util/sleep";
 import { useAuth } from "./useAuth";
 import { useAxios } from "./useAxios";
@@ -7,6 +8,7 @@ export const useDeleteUser = () => {
   const { user } = useAuth();
   const { customAxios } = useAxios();
   const [processing, setProcessing] = useState<boolean>(false);
+  const { setQuotes } = useContext(QuotesContext);
 
   const deleteUser = async (): Promise<boolean> => {
     if (!user) {
@@ -20,6 +22,7 @@ export const useDeleteUser = () => {
     setProcessing(false);
     if (response?.status === 200) {
       await user.delete();
+      setQuotes([]);
       return true;
     }
     return false;
