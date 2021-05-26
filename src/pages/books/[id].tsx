@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Icon } from "@chakra-ui/react";
+import { Flex, Box, Text, Icon, Link } from "@chakra-ui/react";
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -15,6 +15,20 @@ interface Props {
   book: Book;
 }
 
+const toISBN10 = (isbn13: string) => {
+  const src = isbn13.slice(3, 12);
+
+  const sum = src
+    .split("")
+    .map((s: string) => parseInt(s))
+    .reduce((p, c, i) => (i === 1 ? p * 10 : p) + c * (10 - i));
+
+  const rem = 11 - (sum % 11);
+  const checkdigit = rem === 11 ? 0 : rem === 10 ? "X" : rem;
+
+  return `${src}${checkdigit}`;
+};
+
 const BookDetail: NextPage<Props> = ({ book }) => {
   return (
     <>
@@ -23,16 +37,41 @@ const BookDetail: NextPage<Props> = ({ book }) => {
         {book.title}
       </Text>
       <Flex mb={10}>
-        <Image
-          src={book.cover_image_url}
-          width={105}
-          height={148}
-          key={book.isbn}
-        />
+        <Box
+          cursor="pointer"
+          onClick={() => {
+            window.open(
+              `http://www.amazon.co.jp/dp/${toISBN10(book.isbn)}`,
+              "_blank",
+              "noopener"
+            );
+          }}
+        >
+          <Image
+            src={book.cover_image_url}
+            width={105}
+            height={148}
+            key={book.isbn}
+          />
+        </Box>
+
         <Box ml={5}>
-          <Text fontSize="lg" mb={5}>
-            {book.title}
-          </Text>
+          <Link>
+            <Text
+              fontSize="lg"
+              mb={5}
+              onClick={() => {
+                window.open(
+                  `http://www.amazon.co.jp/dp/${toISBN10(book.isbn)}`,
+                  "_blank",
+                  "noopener"
+                );
+              }}
+            >
+              {book.title}
+            </Text>
+          </Link>
+
           <Text mb={5}>{book.author}</Text>
           <Text>{book.publisher}</Text>
         </Box>
