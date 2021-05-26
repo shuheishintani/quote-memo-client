@@ -1,6 +1,5 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Quote } from "../type/Quote";
-import { sleep } from "../util/sleep";
 import { useAxios } from "./useAxios";
 import { useEffectAsync } from "./useEffectAsync";
 
@@ -22,7 +21,7 @@ export const usePublicQuotes = () => {
         ? `/api/quotes?page=1&tags=${query}`
         : `api/quotes?page=1`;
     setFetching(true);
-    await sleep(1000);
+
     const response = await customAxios.get(url);
     if (!unmounted) {
       if (response?.status === 200) {
@@ -51,7 +50,7 @@ export const usePublicQuotes = () => {
           ? `/api/quotes?page=${currentPage}&tags=${query}`
           : `api/quotes?page=${currentPage}`;
       setNextFetching(true);
-      await sleep(1000);
+
       const response = await customAxios.get(url);
       if (!unmounted) {
         if (response?.status === 200) {

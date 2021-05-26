@@ -1,7 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { PageContext } from "../context/PageContext";
 import { QuotesContext } from "../context/QuotesContext";
-import { sleep } from "../util/sleep";
 import { useAxios } from "./useAxios";
 import { useEffectAsync } from "./useEffectAsync";
 
@@ -13,8 +12,6 @@ export const useQuotes = (tags: string[]) => {
   const { currentPage, setCurrentPage } = useContext(PageContext);
   const { customAxios } = useAxios();
   const isInitialMount = useRef(true);
-
-  console.log(next);
 
   useEffectAsync(async () => {
     let unmounted = false;
@@ -31,7 +28,7 @@ export const useQuotes = (tags: string[]) => {
         ? `/api/quotes/me?page=1&tags=${query}`
         : `api/quotes/me?page=1`;
     setFetching(true);
-    await sleep(1000);
+
     const response = await customAxios.get(url);
     if (!unmounted) {
       if (response?.status === 200) {
@@ -64,7 +61,7 @@ export const useQuotes = (tags: string[]) => {
           ? `/api/quotes/me?page=${currentPage}&tags=${query}`
           : `api/quotes/me?page=${currentPage}`;
       setNextFetching(true);
-      await sleep(1000);
+
       const response = await customAxios.get(url);
       if (!unmounted) {
         if (response?.status === 200) {

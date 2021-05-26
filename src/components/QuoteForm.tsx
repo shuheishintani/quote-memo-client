@@ -102,7 +102,7 @@ const QuoteFrom: React.VFC<Props> = ({
       if (success) {
         toast({
           title: `新規作成しました！`,
-          position: "bottom-left",
+          position: "top-left",
           status: "success",
           variant: "subtle",
           isClosable: true,

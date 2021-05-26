@@ -1,7 +1,6 @@
 import { useCallback, useContext, useState } from "react";
 import { QuotesContext } from "../context/QuotesContext";
 import { QuoteInput } from "../dto/QuoteInput";
-import { sleep } from "../util/sleep";
 import { useAxios } from "./useAxios";
 
 export const useUpdateQuote = () => {
@@ -12,7 +11,7 @@ export const useUpdateQuote = () => {
   const updateQuote = useCallback(
     async (updateQuoteInput: QuoteInput, id: number): Promise<boolean> => {
       setProcessing(true);
-      await sleep(1000);
+
       const response = await customAxios.put(
         process.env.NEXT_PUBLIC_API_BASE_URL + `/api/quotes/${id}`,
         updateQuoteInput

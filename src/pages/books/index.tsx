@@ -40,7 +40,6 @@ const Books: NextPage<Props> = ({ initialBooks }) => {
     setBooks(arrangedBooks);
   };
 
-  console.log(books);
   return (
     <>
       <Text fontSize="2xl" fontWeight="bold" mb={10}>

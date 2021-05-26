@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { sleep } from "../util/sleep";
 import { useAxios } from "./useAxios";
 
 export const useRemoveFavoriteQuote = () => {
@@ -9,7 +8,7 @@ export const useRemoveFavoriteQuote = () => {
   const removeFavoriteQuote = useCallback(
     async (id: number): Promise<boolean> => {
       setProcessing(true);
-      await sleep(1000);
+
       const response = await customAxios.put(`/api/quotes/${id}/unlike`);
       setProcessing(false);
       if (response?.status === 200) {

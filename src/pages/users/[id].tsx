@@ -1,4 +1,4 @@
-import { Avatar, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Icon, Text } from "@chakra-ui/react";
 import {
   GetStaticPaths,
   GetStaticProps,
@@ -6,6 +6,7 @@ import {
   NextPage,
 } from "next";
 import React from "react";
+import { CgQuoteO } from "react-icons/cg";
 import { PublicQuoteItem } from "../../components/PublicQuoteItem";
 import { Book } from "../../type/Book";
 import { User } from "../../type/User";
@@ -17,16 +18,18 @@ interface Props {
 const UserDetail: NextPage<Props> = ({ user }) => {
   return (
     <>
-      <Flex>
-        <Avatar
-          size="sm"
-          name={user?.username || undefined}
-          src={user?.profile_image_url || undefined}
-          mr={2}
-        />
-        <Text fontSize="xl" mb={10} fontWeight="bold">
-          {user?.username} / Public quotes
+      <Flex align="center" mb={10}>
+        <Text fontSize="2xl" fontWeight="bold" mr={2}>
+          <Icon as={CgQuoteO} mr={2} w={6} h={6} />
+          Quotes
         </Text>
+        <Text fontSize="xl" mr={2}>
+          /
+        </Text>
+        {user.profile_image_url && (
+          <Avatar size="xs" src={user.profile_image_url} mr={2} />
+        )}
+        <Text fontSize="xl">{user.username}</Text>
       </Flex>
       {user &&
         user.quotes?.map((quote) => (

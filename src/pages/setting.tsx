@@ -26,7 +26,6 @@ const Config: NextPage = () => {
   const { colorMode } = useColorMode();
   const { getPrivateQuotesForExport } = useGetPrivateQuotesForExport();
   const { user } = useAuth();
-
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = useRef(null);
@@ -51,14 +50,14 @@ const Config: NextPage = () => {
   const handleDelete = async () => {
     const success = await deleteUser();
     if (success) {
-      router.push("/");
       toast({
         title: `ユーザーを削除しました`,
-        position: "bottom-left",
+        position: "top-left",
         status: "info",
         variant: "subtle",
         isClosable: true,
       });
+      router.push("/");
     }
   };
 

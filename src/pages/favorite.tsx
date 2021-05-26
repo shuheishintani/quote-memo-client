@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Favorite: NextPage<Props> = () => {
-  const { favoriteQuotes, loading } = useFavoriteQuotes();
+  const { favoriteQuotes, fetching } = useFavoriteQuotes();
   const { user } = useAuth();
 
   if (!user) {
@@ -33,7 +33,7 @@ const Favorite: NextPage<Props> = () => {
         )}
         <Text fontSize="xl">{user.displayName}</Text>
       </Flex>
-      {favoriteQuotes && !loading ? (
+      {favoriteQuotes && !fetching ? (
         favoriteQuotes.map((quote) => (
           <PublicQuoteItem key={quote.id} quote={quote} />
         ))
