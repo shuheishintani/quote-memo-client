@@ -1,15 +1,14 @@
-import { useContext, useRef, useState } from "react";
-import { PageContext } from "../context/PageContext";
-import { QuotesContext } from "../context/QuotesContext";
+import { useRef, useState } from "react";
+import { Quote } from "../type/Quote";
 import { useAxios } from "./useAxios";
 import { useEffectAsync } from "./useEffectAsync";
 
 export const useQuotes = (tags: string[]) => {
-  const { quotes, setQuotes } = useContext(QuotesContext);
+  const [quotes, setQuotes] = useState<Quote[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
   const [nextFetching, setNextFetching] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
-  const { currentPage, setCurrentPage } = useContext(PageContext);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const { customAxios } = useAxios();
   const isInitialMount = useRef(true);
 
@@ -80,5 +79,5 @@ export const useQuotes = (tags: string[]) => {
     };
   }, [currentPage]);
 
-  return { quotes, setCurrentPage, fetching, nextFetching, next };
+  return { quotes, setQuotes, setCurrentPage, fetching, nextFetching, next };
 };

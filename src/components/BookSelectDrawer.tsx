@@ -42,7 +42,6 @@ export const BookSelectDrawer: React.VFC<Props> = ({
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { getExternalBooks } = useGetExternalBooks();
-  const { quotes } = useContext(QuotesContext);
   const [keyword, setKeyword] = useState("");
   const firstField = React.createRef<HTMLInputElement>();
   const { colorMode } = useColorMode();
@@ -74,14 +73,6 @@ export const BookSelectDrawer: React.VFC<Props> = ({
   const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   };
-
-  useEffect(() => {
-    const registeredBooks = _.uniqBy(
-      quotes.map((quote) => quote.book),
-      (book) => book.isbn
-    );
-    setBooks(registeredBooks);
-  }, []);
 
   return (
     <>

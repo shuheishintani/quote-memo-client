@@ -20,9 +20,14 @@ import { TagList } from "./TagList";
 interface Props {
   quote: Quote;
   setAddedTags: React.Dispatch<React.SetStateAction<string[]>>;
+  setQuotes: React.Dispatch<React.SetStateAction<Quote[]>>;
 }
 
-export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
+export const QuoteItem: React.VFC<Props> = ({
+  quote,
+  setAddedTags,
+  setQuotes,
+}) => {
   const { deleteQuote, loading: isDeleting } = useDeleteQuote();
   const { updateQuote, processing: isUpdating } = useUpdateQuote();
   const router = useRouter();
@@ -31,11 +36,17 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
   const textColor = { light: "black", dark: "white" };
 
   useEffect(() => {
+    let unmounted = false;
     if (beforeDelete) {
       setTimeout(() => {
-        setBeforeDelete(false);
+        if (!unmounted) {
+          setBeforeDelete(false);
+        }
       }, 2000);
     }
+    return () => {
+      unmounted = true;
+    };
   }, [beforeDelete]);
 
   const handlePublish = (id: number) => {
@@ -47,7 +58,10 @@ export const QuoteItem: React.VFC<Props> = ({ quote, setAddedTags }) => {
       setBeforeDelete(true);
     } else {
       setBeforeDelete(false);
-      deleteQuote(id);
+      const success = deleteQuote(id);
+      if (success) {
+        setQuotes((prev) => prev.filter((quote) => quote.id !== id));
+      }
     }
   };
 

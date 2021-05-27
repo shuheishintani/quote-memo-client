@@ -1,12 +1,10 @@
-import { useCallback, useContext, useState } from "react";
-import { QuotesContext } from "../context/QuotesContext";
+import { useCallback, useState } from "react";
 import { QuoteInput } from "../dto/QuoteInput";
 import { useAxios } from "./useAxios";
 
 export const usePostQuote = () => {
   const { customAxios } = useAxios();
   const [processing, setProcessing] = useState<boolean>(false);
-  const { setQuotes } = useContext(QuotesContext);
 
   const postQuote = useCallback(
     async (postQuoteInput: QuoteInput): Promise<boolean> => {
@@ -18,7 +16,6 @@ export const usePostQuote = () => {
       );
       setProcessing(false);
       if (response?.status === 201) {
-        setQuotes((prev) => [...prev, response.data]);
         return true;
       }
       return false;

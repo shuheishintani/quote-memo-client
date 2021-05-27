@@ -1,22 +1,21 @@
-import { useCallback, useContext, useState } from "react";
-import { QuotesContext } from "../context/QuotesContext";
+import { useCallback, useState } from "react";
 import { useAxios } from "./useAxios";
 
 export const useDeleteQuote = () => {
   const { customAxios } = useAxios();
   const [loading, setLoading] = useState<boolean>(false);
-  const { setQuotes } = useContext(QuotesContext);
 
-  const deleteQuote = useCallback(async (id: number) => {
+  const deleteQuote = useCallback(async (id: number): Promise<boolean> => {
     setLoading(true);
 
-    const response = await customAxios.delete(
+    const response = await await customAxios.delete(
       process.env.NEXT_PUBLIC_API_BASE_URL + `/api/quotes/${id}`
     );
     setLoading(false);
-    if (response?.status === 200) {
-      setQuotes((prev) => prev.filter((q) => q.id !== id));
+    if (response.status === 200) {
+      return true;
     }
+    return false;
   }, []);
   return { deleteQuote, loading };
 };

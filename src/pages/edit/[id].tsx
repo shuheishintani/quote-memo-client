@@ -1,19 +1,25 @@
+import { Icon, Spinner, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useContext } from "react";
-import QuoteForm from "../../components/QuoteForm";
-import { QuotesContext } from "../../context/QuotesContext";
-import { useUpdateQuote } from "../../hooks/useUpdateQuote";
-import { Icon, Text } from "@chakra-ui/react";
+import React from "react";
 import { FiEdit } from "react-icons/fi";
+import QuoteForm from "../../components/QuoteForm";
+import { useGetPrivateQuoteById } from "../../hooks/useGetPrivateQuoteById";
+import { useUpdateQuote } from "../../hooks/useUpdateQuote";
 
 const Edit: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { quotes } = useContext(QuotesContext);
-  const i = quotes.findIndex((quote) => quote.id === parseInt(id as string));
-  const edittingQuote = quotes[i];
+
+  const { quote, fetching } = useGetPrivateQuoteById(id);
+
   const { updateQuote, processing } = useUpdateQuote();
+
+  console.log(quote);
+
+  if (fetching) {
+    return <Spinner />;
+  }
 
   return (
     <>
@@ -21,12 +27,14 @@ const Edit: NextPage = () => {
         <Icon as={FiEdit} mr={2} w={6} h={6} />
         Edit
       </Text>
-      <QuoteForm
-        updateQuote={updateQuote}
-        processing={processing}
-        initialQuote={edittingQuote}
-        registeredTags={[]}
-      />
+      {quote && (
+        <QuoteForm
+          updateQuote={updateQuote}
+          processing={processing}
+          initialQuote={quote}
+          registeredTags={[]}
+        />
+      )}
     </>
   );
 };

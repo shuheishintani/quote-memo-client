@@ -15,7 +15,7 @@ interface Props {
 
 const Index: NextPage<Props> = ({ registeredTags }) => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
-  const { quotes, setCurrentPage, fetching, nextFetching, next } =
+  const { quotes, setQuotes, setCurrentPage, fetching, nextFetching, next } =
     useQuotes(addedTags);
   const { user } = useAuth();
 
@@ -58,6 +58,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
                     key={quote.id}
                     quote={quote}
                     setAddedTags={setAddedTags}
+                    setQuotes={setQuotes}
                   />
                 ))}
               <FetchMoreButton
