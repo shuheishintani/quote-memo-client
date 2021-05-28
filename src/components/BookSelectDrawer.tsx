@@ -19,10 +19,8 @@ import {
   WrapItem,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import _ from "lodash";
 import Image from "next/image";
-import React, { useContext, useEffect, useState } from "react";
-import { QuotesContext } from "../context/QuotesContext";
+import React, { useState } from "react";
 import { useGetExternalBooks } from "../hooks/useGetExternalBooks";
 import { Book } from "../type/Book";
 
