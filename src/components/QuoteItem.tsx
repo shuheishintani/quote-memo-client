@@ -53,12 +53,12 @@ export const QuoteItem: React.VFC<Props> = ({
     updateQuote({ ...quote, published: !quote.published }, id);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: number) => {
     if (!beforeDelete) {
       setBeforeDelete(true);
     } else {
       setBeforeDelete(false);
-      const success = deleteQuote(id);
+      const success = await deleteQuote(id);
       if (success) {
         setQuotes((prev) => prev.filter((quote) => quote.id !== id));
       }

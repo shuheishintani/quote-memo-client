@@ -59,10 +59,6 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
                 setAddedTags={setAddedTags}
               />
             )}
-            <PublicQuotesList
-              publicQuotes={publicQuotes}
-              setAddedTags={setAddedTags}
-            />
             <FetchMoreButton
               setCurrentPage={setCurrentPage}
               nextFetching={nextFetching}

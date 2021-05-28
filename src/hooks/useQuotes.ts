@@ -10,16 +10,9 @@ export const useQuotes = (tags: string[]) => {
   const [next, setNext] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const { customAxios } = useAxios();
-  const isInitialMount = useRef(true);
 
   useEffectAsync(async () => {
     let unmounted = false;
-    if (isInitialMount.current && quotes.length > 0) {
-      if (quotes.length >= 10) {
-        setNext(true);
-      }
-      return;
-    }
 
     const query = tags.join(",");
     const url =
@@ -48,10 +41,6 @@ export const useQuotes = (tags: string[]) => {
 
   useEffectAsync(async () => {
     let unmounted = false;
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
 
     if (currentPage !== 1) {
       const query = tags.join(",");

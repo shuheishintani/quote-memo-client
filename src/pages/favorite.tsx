@@ -1,7 +1,8 @@
 import { Avatar, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
+import { FetchMoreButton } from "../components/FetchMoreButton";
 import { PublicQuoteItem } from "../components/PublicQuoteItem";
 import { useAuth } from "../hooks/useAuth";
 import { useFavoriteQuotes } from "../hooks/useFavoriteQuotes";
@@ -11,7 +12,8 @@ interface Props {
 }
 
 const Favorite: NextPage<Props> = () => {
-  const { favoriteQuotes, fetching } = useFavoriteQuotes();
+  const { favoriteQuotes, setCurrentPage, fetching, nextFetching, next } =
+    useFavoriteQuotes();
   const { user } = useAuth();
 
   if (!user) {
@@ -33,12 +35,20 @@ const Favorite: NextPage<Props> = () => {
         )}
         <Text fontSize="xl">{user.displayName}</Text>
       </Flex>
-      {favoriteQuotes && !fetching ? (
-        favoriteQuotes.map((quote) => (
-          <PublicQuoteItem key={quote.id} quote={quote} />
-        ))
-      ) : (
+      {fetching ? (
         <Spinner />
+      ) : (
+        <>
+          {favoriteQuotes &&
+            favoriteQuotes.map((quote) => (
+              <PublicQuoteItem key={quote.id} quote={quote} />
+            ))}
+          <FetchMoreButton
+            setCurrentPage={setCurrentPage}
+            nextFetching={nextFetching}
+            next={next}
+          />
+        </>
       )}
     </>
   );

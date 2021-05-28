@@ -39,7 +39,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
         <Text fontSize="xl">{user.displayName}</Text>
       </Flex>
 
-      {user && (
+      {
         <>
           <TagInput
             registeredTags={registeredTags}
@@ -69,7 +69,7 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
             </>
           )}
         </>
-      )}
+      }
     </>
   );
 };

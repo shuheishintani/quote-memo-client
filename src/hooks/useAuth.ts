@@ -11,8 +11,6 @@ export const useAuth: () => {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
 
-
-
   useEffect(() => {
     if (!user && !loading && router.pathname !== "index") {
       router.push("/");

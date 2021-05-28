@@ -10,12 +10,8 @@ import { useUpdateQuote } from "../../hooks/useUpdateQuote";
 const Edit: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-
   const { quote, fetching } = useGetPrivateQuoteById(id);
-
   const { updateQuote, processing } = useUpdateQuote();
-
-  console.log(quote);
 
   if (fetching) {
     return <Spinner />;
