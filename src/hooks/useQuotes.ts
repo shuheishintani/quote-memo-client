@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Quote } from "../type/Quote";
 import { useAxios } from "./useAxios";
 import { useEffectAsync } from "./useEffectAsync";
