@@ -49,8 +49,22 @@ export const QuoteItem: React.VFC<Props> = ({
     };
   }, [beforeDelete]);
 
-  const handlePublish = (id: number) => {
-    updateQuote({ ...quote, published: !quote.published }, id);
+  const handlePublish = async (id: number) => {
+    const success = await updateQuote(
+      { ...quote, published: !quote.published },
+      id
+    );
+    if (success) {
+      setQuotes((prev) =>
+        prev.map((quote) => {
+          if (quote.id !== id) {
+            return quote;
+          } else {
+            return { ...quote, published: !quote.published };
+          }
+        })
+      );
+    }
   };
 
   const handleDelete = async (id: number) => {
