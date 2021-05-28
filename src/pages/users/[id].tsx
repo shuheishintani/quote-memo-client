@@ -5,10 +5,12 @@ import {
   GetStaticPropsContext,
   NextPage,
 } from "next";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CgQuoteO } from "react-icons/cg";
+import { FetchMoreButton } from "../../components/FetchMoreButton";
 import { PublicQuoteItem } from "../../components/PublicQuoteItem";
 import { Book } from "../../type/Book";
+import { Quote } from "../../type/Quote";
 import { User } from "../../type/User";
 
 interface Props {
@@ -16,6 +18,28 @@ interface Props {
 }
 
 const UserDetail: NextPage<Props> = ({ user }) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [next, setNext] = useState<boolean>(false);
+  const [quotes, setQuotes] = useState<Quote[]>([]);
+
+  useEffect(() => {
+    if (quotes.length % 5 !== 0) {
+      setNext(false);
+    } else {
+      setNext(true);
+    }
+  }, [quotes]);
+
+  useEffect(() => {
+    if (user.quotes) {
+      setQuotes(user.quotes?.slice(0, 10 * currentPage));
+    }
+  }, [currentPage]);
+
+  if (!user) {
+    <></>;
+  }
+
   return (
     <>
       <Flex align="center" mb={10}>
@@ -31,10 +55,10 @@ const UserDetail: NextPage<Props> = ({ user }) => {
         )}
         <Text fontSize="xl">{user.username}</Text>
       </Flex>
-      {user &&
-        user.quotes?.map((quote) => (
-          <PublicQuoteItem key={quote.id} quote={quote} />
-        ))}
+      {quotes.map((quote) => (
+        <PublicQuoteItem key={quote.id} quote={quote} />
+      ))}
+      <FetchMoreButton next={next} setCurrentPage={setCurrentPage} />
     </>
   );
 };

@@ -3,7 +3,7 @@ import React from "react";
 
 interface Props {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-  nextFetching: boolean;
+  nextFetching?: boolean;
   next: boolean;
 }
 

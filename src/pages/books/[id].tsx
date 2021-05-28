@@ -5,11 +5,13 @@ import {
   GetStaticPropsContext,
   NextPage,
 } from "next";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Book } from "../../type/Book";
 import Image from "next/image";
 import { PublicQuoteItem } from "../../components/PublicQuoteItem";
 import { RiBookReadLine } from "react-icons/ri";
+import { Quote } from "../../type/Quote";
+import { FetchMoreButton } from "../../components/FetchMoreButton";
 
 interface Props {
   book: Book;
@@ -30,6 +32,24 @@ const toISBN10 = (isbn13: string) => {
 };
 
 const BookDetail: NextPage<Props> = ({ book }) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [next, setNext] = useState<boolean>(false);
+  const [quotes, setQuotes] = useState<Quote[]>([]);
+
+  useEffect(() => {
+    if (quotes.length % 5 !== 0) {
+      setNext(false);
+    } else {
+      setNext(true);
+    }
+  }, [quotes]);
+
+  useEffect(() => {
+    if (book.quotes) {
+      setQuotes(book.quotes?.slice(0, 10 * currentPage));
+    }
+  }, [currentPage]);
+
   return (
     <>
       <Text fontSize="2xl" fontWeight="bold" mb={10}>
@@ -76,10 +96,10 @@ const BookDetail: NextPage<Props> = ({ book }) => {
           <Text>{book.publisher}</Text>
         </Box>
       </Flex>
-      {book &&
-        book.quotes?.map((quote) => (
-          <PublicQuoteItem key={quote.id} quote={quote} />
-        ))}
+      {quotes.map((quote) => (
+        <PublicQuoteItem key={quote.id} quote={quote} />
+      ))}
+      <FetchMoreButton next={next} setCurrentPage={setCurrentPage} />
     </>
   );
 };
