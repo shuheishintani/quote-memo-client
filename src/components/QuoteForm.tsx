@@ -62,8 +62,6 @@ const QuoteFrom: React.VFC<Props> = ({
   const toast = useToast();
   const { colorMode } = useColorMode();
 
-  console.log(initialQuote);
-
   const handleBookSelect = (selectedBook: Book) => {
     setBook(selectedBook);
     const author = selectedBook.author.split("/")[0].replace(/\s+/g, "");

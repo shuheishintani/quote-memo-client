@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Quote } from "../type/Quote";
+import { useAuth } from "./useAuth";
 import { useAxios } from "./useAxios";
 import { useEffectAsync } from "./useEffectAsync";
 
@@ -10,9 +11,13 @@ export const useFavoriteQuotes = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [nextFetching, setNextFetching] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
+  const { user } = useAuth();
 
   useEffectAsync(async () => {
     let unmounted = false;
+    if (!user) {
+      return;
+    }
     setFetching(true);
     const response = await customAxios.get("/api/quotes/my_favorite?page=1");
     if (!unmounted) {
@@ -34,6 +39,10 @@ export const useFavoriteQuotes = () => {
 
   useEffectAsync(async () => {
     let unmounted = false;
+
+    if (!user) {
+      return;
+    }
 
     if (currentPage !== 1) {
       setNextFetching(true);

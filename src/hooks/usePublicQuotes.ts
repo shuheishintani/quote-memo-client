@@ -12,11 +12,8 @@ export const usePublicQuotes = () => {
   const [addedTags, setAddedTags] = useState<string[]>([]);
   const { customAxios } = useAxios();
 
-  console.log(publicQuotes);
-
   //初回マウント時とaddedTagsが変化した時のみ発火
   useEffectAsync(async () => {
-    console.log("hoge");
     let unmounted = false;
     const query = addedTags.join(",");
     const url =
@@ -47,8 +44,6 @@ export const usePublicQuotes = () => {
   useEffectAsync(async () => {
     let unmounted = false;
     if (currentPage !== 1) {
-      console.log("piyo");
-
       const query = addedTags.join(",");
       const url =
         addedTags.length > 0
