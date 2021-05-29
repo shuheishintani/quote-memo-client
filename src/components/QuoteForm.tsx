@@ -101,8 +101,8 @@ const QuoteFrom: React.VFC<Props> = ({
       const success = await postQuote(postQuoteInput);
       if (success) {
         toast({
-          title: `新規作成しました！`,
-          position: "top-left",
+          title: `引用を新規作成しました！`,
+          position: "bottom-left",
           status: "success",
           variant: "subtle",
           isClosable: true,

@@ -39,10 +39,16 @@ const Favorite: NextPage<Props> = () => {
         <Spinner />
       ) : (
         <>
-          {favoriteQuotes &&
-            favoriteQuotes.map((quote) => (
-              <PublicQuoteItem key={quote.id} quote={quote} />
-            ))}
+          {favoriteQuotes.length === 0 ? (
+            <Text>お気に入りに追加された引用は存在しません。</Text>
+          ) : (
+            <>
+              {favoriteQuotes.map((quote) => (
+                <PublicQuoteItem key={quote.id} quote={quote} />
+              ))}
+            </>
+          )}
+
           <FetchMoreButton
             setCurrentPage={setCurrentPage}
             nextFetching={nextFetching}

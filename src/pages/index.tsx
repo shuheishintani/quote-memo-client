@@ -47,18 +47,25 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
           <Spinner mb={24} />
         ) : (
           <>
-            {user ? (
-              <PublicQuotesListWithAuth
-                publicQuotes={publicQuotes}
-                setAddedTags={setAddedTags}
-                favoriteQuotes={favoriteQuotes}
-              />
+            {publicQuotes.length === 0 ? (
+              <Text>条件に該当する引用は存在しません。</Text>
             ) : (
-              <PublicQuotesList
-                publicQuotes={publicQuotes}
-                setAddedTags={setAddedTags}
-              />
+              <>
+                {user ? (
+                  <PublicQuotesListWithAuth
+                    publicQuotes={publicQuotes}
+                    setAddedTags={setAddedTags}
+                    favoriteQuotes={favoriteQuotes}
+                  />
+                ) : (
+                  <PublicQuotesList
+                    publicQuotes={publicQuotes}
+                    setAddedTags={setAddedTags}
+                  />
+                )}
+              </>
             )}
+
             <FetchMoreButton
               setCurrentPage={setCurrentPage}
               nextFetching={nextFetching}

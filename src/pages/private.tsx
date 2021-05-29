@@ -52,15 +52,21 @@ const Index: NextPage<Props> = ({ registeredTags }) => {
             <Spinner />
           ) : (
             <>
-              {quotes &&
-                quotes.map((quote) => (
-                  <QuoteItem
-                    key={quote.id}
-                    quote={quote}
-                    setAddedTags={setAddedTags}
-                    setQuotes={setQuotes}
-                  />
-                ))}
+              {quotes.length === 0 ? (
+                <Text>条件に該当する引用は存在しません。</Text>
+              ) : (
+                <>
+                  {quotes.map((quote) => (
+                    <QuoteItem
+                      key={quote.id}
+                      quote={quote}
+                      setAddedTags={setAddedTags}
+                      setQuotes={setQuotes}
+                    />
+                  ))}
+                </>
+              )}
+
               <FetchMoreButton
                 setCurrentPage={setCurrentPage}
                 nextFetching={nextFetching}

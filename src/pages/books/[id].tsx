@@ -97,9 +97,16 @@ const BookDetail: NextPage<Props> = ({ book }) => {
           <Text>{book.publisher}</Text>
         </Box>
       </Flex>
-      {quotes.map((quote) => (
-        <PublicQuoteItem key={quote.id} quote={quote} />
-      ))}
+      {quotes.length === 0 ? (
+        <Text>この書籍に関連する公開引用は存在しません。</Text>
+      ) : (
+        <>
+          {quotes.map((quote) => (
+            <PublicQuoteItem key={quote.id} quote={quote} />
+          ))}
+        </>
+      )}
+
       <FetchMoreButton next={next} setCurrentPage={setCurrentPage} />
     </>
   );

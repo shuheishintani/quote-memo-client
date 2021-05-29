@@ -8,6 +8,7 @@ import {
   Text,
   Tooltip,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
@@ -34,6 +35,7 @@ export const QuoteItem: React.VFC<Props> = ({
   const [beforeDelete, setBeforeDelete] = useState<boolean>(false);
   const { colorMode } = useColorMode();
   const textColor = { light: "black", dark: "white" };
+  const toast = useToast();
 
   useEffect(() => {
     let unmounted = false;
@@ -75,6 +77,13 @@ export const QuoteItem: React.VFC<Props> = ({
       const success = await deleteQuote(id);
       if (success) {
         setQuotes((prev) => prev.filter((quote) => quote.id !== id));
+        toast({
+          title: `引用を削除しました！`,
+          position: "bottom-left",
+          status: "info",
+          variant: "subtle",
+          isClosable: true,
+        });
       }
     }
   };

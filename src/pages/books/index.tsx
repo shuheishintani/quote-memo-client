@@ -57,28 +57,33 @@ const Books: NextPage<Props> = ({ initialBooks }) => {
         maxLength={30}
       />
       <Wrap spacing="20px">
-        {books &&
-          books.map((book) => (
-            <WrapItem key={book.id}>
-              {book.cover_image_url && (
-                <Box>
-                  <motion.div whileHover={{ scale: 1.1 }}>
-                    <Box boxShadow="lg" mb={3} cursor="pointer">
-                      <Image
-                        src={book.cover_image_url}
-                        width={105}
-                        height={148}
-                        onClick={() => router.push(`/books/${book.id}`)}
-                      />
-                    </Box>
-                  </motion.div>
-                  <Text fontSize="sm" align="center">
-                    （{book.quotes?.length}件の引用）
-                  </Text>
-                </Box>
-              )}
-            </WrapItem>
-          ))}
+        {books.length === 0 ? (
+          <Text>キーワードを含む書籍に登録された引用は存在しません。</Text>
+        ) : (
+          <>
+            {books.map((book) => (
+              <WrapItem key={book.id}>
+                {book.cover_image_url && (
+                  <Box>
+                    <motion.div whileHover={{ scale: 1.1 }}>
+                      <Box boxShadow="lg" mb={3} cursor="pointer">
+                        <Image
+                          src={book.cover_image_url}
+                          width={105}
+                          height={148}
+                          onClick={() => router.push(`/books/${book.id}`)}
+                        />
+                      </Box>
+                    </motion.div>
+                    <Text fontSize="sm" align="center">
+                      （{book.quotes?.length}件の引用）
+                    </Text>
+                  </Box>
+                )}
+              </WrapItem>
+            ))}
+          </>
+        )}
       </Wrap>
     </>
   );

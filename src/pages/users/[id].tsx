@@ -56,9 +56,16 @@ const UserDetail: NextPage<Props> = ({ user }) => {
         )}
         <Text fontSize="xl">{user.username}</Text>
       </Flex>
-      {quotes.map((quote) => (
-        <PublicQuoteItem key={quote.id} quote={quote} />
-      ))}
+      {quotes.length === 0 ? (
+        <Text>公開された引用は存在しません。</Text>
+      ) : (
+        <>
+          {quotes.map((quote) => (
+            <PublicQuoteItem key={quote.id} quote={quote} />
+          ))}
+        </>
+      )}
+
       <FetchMoreButton next={next} setCurrentPage={setCurrentPage} />
     </>
   );

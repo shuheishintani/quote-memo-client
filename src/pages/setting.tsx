@@ -52,7 +52,7 @@ const Config: NextPage = () => {
     if (success) {
       toast({
         title: `ユーザーを削除しました`,
-        position: "top-left",
+        position: "bottom-left",
         status: "info",
         variant: "subtle",
         isClosable: true,
