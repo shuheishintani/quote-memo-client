@@ -1,6 +1,6 @@
 import { Avatar, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FetchMoreButton } from "../components/FetchMoreButton";
 import { PublicQuoteItem } from "../components/PublicQuoteItem";

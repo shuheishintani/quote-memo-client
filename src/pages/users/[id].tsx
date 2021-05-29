@@ -12,6 +12,7 @@ import { PublicQuoteItem } from "../../components/PublicQuoteItem";
 import { Book } from "../../type/Book";
 import { Quote } from "../../type/Quote";
 import { User } from "../../type/User";
+import axios from "axios";
 
 interface Props {
   user: User;
@@ -64,11 +65,10 @@ const UserDetail: NextPage<Props> = ({ user }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch(
+  const response = await axios.get(
     process.env.NEXT_PUBLIC_API_BASE_URL + "/api/users"
   );
-  const users = await response.json();
-  const paths = users.map((book: Book) => ({
+  const paths = response.data.map((book: Book) => ({
     params: { id: book.id?.toString() },
   }));
   return { paths, fallback: false };
@@ -77,12 +77,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }: GetStaticPropsContext) => {
-  const response = await fetch(
+  const response = await axios.get(
     process.env.NEXT_PUBLIC_API_BASE_URL + `/api/users/${params?.id}`
   );
-  const user = await response.json();
+
   return {
-    props: { user },
+    props: { user: response.data },
   };
 };
 

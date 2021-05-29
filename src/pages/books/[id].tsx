@@ -12,6 +12,7 @@ import { PublicQuoteItem } from "../../components/PublicQuoteItem";
 import { RiBookReadLine } from "react-icons/ri";
 import { Quote } from "../../type/Quote";
 import { FetchMoreButton } from "../../components/FetchMoreButton";
+import axios from "axios";
 
 interface Props {
   book: Book;
@@ -118,12 +119,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }: GetStaticPropsContext) => {
-  const response = await fetch(
+  const response = await axios.get(
     process.env.NEXT_PUBLIC_API_BASE_URL + `/api/books/${params?.id}`
   );
-  const book = await response.json();
   return {
-    props: { book },
+    props: { book: response.data },
   };
 };
 
