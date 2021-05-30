@@ -38,7 +38,7 @@ const UserDetail: NextPage<Props> = ({ user }) => {
   }, [currentPage]);
 
   if (!user) {
-    <></>;
+    return <></>;
   }
 
   return (
