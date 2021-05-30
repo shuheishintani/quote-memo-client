@@ -78,7 +78,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = response.data.map((book: Book) => ({
     params: { id: book.id?.toString() },
   }));
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps: GetStaticProps = async ({
@@ -90,6 +90,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: { user: response.data },
+    revalidate: 1,
   };
 };
 

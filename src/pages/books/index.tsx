@@ -105,6 +105,7 @@ export const getStaticProps: GetStaticProps = async () => {
     .filter((book) => book.quotes?.length !== 0);
   return {
     props: { initialBooks: arrangedBooks },
+    revalidate: 1,
   };
 };
 

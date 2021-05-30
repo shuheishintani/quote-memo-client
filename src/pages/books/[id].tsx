@@ -51,6 +51,10 @@ const BookDetail: NextPage<Props> = ({ book }) => {
     }
   }, [currentPage]);
 
+  if (!book) {
+    return <></>;
+  }
+
   return (
     <>
       <Text fontSize="2xl" fontWeight="bold" mb={10}>
@@ -120,7 +124,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = books.map((book: Book) => ({
     params: { id: book.id?.toString() },
   }));
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps: GetStaticProps = async ({
@@ -131,6 +135,7 @@ export const getStaticProps: GetStaticProps = async ({
   );
   return {
     props: { book: response.data },
+    revalidate: 1,
   };
 };
 
