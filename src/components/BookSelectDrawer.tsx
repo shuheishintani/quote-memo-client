@@ -20,8 +20,9 @@ import {
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGetExternalBooks } from "../hooks/useGetExternalBooks";
+import { useMyBooks } from "../hooks/useMyBooks";
 import { Book } from "../type/Book";
 
 interface Props {
@@ -37,6 +38,7 @@ export const BookSelectDrawer: React.VFC<Props> = ({
   isOpen,
   onClose,
 }) => {
+  const { registeredBooks, fetching } = useMyBooks();
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { getExternalBooks } = useGetExternalBooks();
@@ -45,6 +47,10 @@ export const BookSelectDrawer: React.VFC<Props> = ({
   const { colorMode } = useColorMode();
   const bgColor = { light: "gray.100", dark: "gray.900" };
   const color = { light: "black", dark: "white" };
+
+  useEffect(() => {
+    setBooks(registeredBooks);
+  }, [registeredBooks]);
 
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
@@ -104,7 +110,7 @@ export const BookSelectDrawer: React.VFC<Props> = ({
                   onKeyPress={handleSearch}
                   ref={firstField}
                 />
-                {loading && <Spinner />}
+                {(fetching || loading) && <Spinner />}
                 {!loading && (
                   <Wrap spacing="20px">
                     {books.map((book, i) => (
